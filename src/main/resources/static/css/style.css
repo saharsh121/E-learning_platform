@@ -1,0 +1,265 @@
+/* ===============================
+   GLOBAL
+=================================*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#f4f6f5;
+    color:#222;
+}
+
+/* ===============================
+   NAVBAR
+=================================*/
+
+.navbar{
+    background:#0B4F3A;
+    padding:15px 0;
+}
+
+.navbar-brand{
+    color:white !important;
+    font-size:30px;
+    font-weight:700;
+}
+
+.nav-link{
+    color:white !important;
+    margin-left:20px;
+    font-size:17px;
+    transition:.3s;
+}
+
+.nav-link:hover{
+    color:#cfe9df !important;
+}
+
+/* ===============================
+   HERO
+=================================*/
+
+.hero{
+    background:#0B4F3A;
+    color:white;
+    text-align:center;
+    padding:90px 20px;
+}
+
+.hero h1{
+    font-size:58px;
+    font-weight:700;
+}
+
+.hero h4{
+    margin-top:15px;
+    font-weight:400;
+}
+
+.hero-text{
+    width:70%;
+    margin:auto;
+    margin-top:25px;
+    line-height:32px;
+    font-size:18px;
+}
+
+/* ===============================
+   LOGIN SECTION
+=================================*/
+
+.login-section{
+    margin-top:-45px;
+    margin-bottom:70px;
+}
+
+/* ===============================
+   LOGIN CARDS - CONSISTENT GREEN
+=================================*/
+
+.portal{
+    background:white;
+    border:none;
+    border-radius:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
+    transition:.35s;
+}
+
+.portal:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 30px rgba(11,79,58,0.2);
+}
+
+/* ✅ ALL portals - Consistent Green top border */
+.student,
+.faculty,
+.admin{
+    border-top:6px solid #0B4F3A;
+}
+
+/* ✅ ALL portal icons - Consistent Green */
+.portal i{
+    font-size:55px;
+    color:#0B4F3A;
+    margin:20px;
+}
+
+.portal i:hover{
+    transform:scale(1.1);
+}
+
+.portal h3{
+    font-weight:600;
+    margin-bottom:15px;
+}
+
+.portal p{
+    color:#555;
+    line-height:28px;
+}
+
+/* ===============================
+   BUTTONS - Consistent Green
+=================================*/
+
+.btn-primary,
+.btn-faculty,
+.btn-admin{
+    background:#0B4F3A;
+    border:none;
+    color:white;
+    padding:10px 35px;
+    border-radius:8px;
+    transition:.3s;
+}
+
+.btn-primary:hover,
+.btn-faculty:hover,
+.btn-admin:hover{
+    background:#146C43;
+    color:white;
+    transform:scale(1.05);
+}
+
+/* ===============================
+   SECTION TITLE
+=================================*/
+
+.section-title{
+    text-align:center;
+    margin-bottom:45px;
+}
+
+.section-title h2{
+    font-size:38px;
+    font-weight:700;
+    color:#0B4F3A;
+}
+
+/* ===============================
+   ABOUT
+=================================*/
+
+.about{
+    width:80%;
+    margin:auto;
+    text-align:center;
+    line-height:34px;
+    color:#555;
+}
+
+/* ===============================
+   FEATURES
+=================================*/
+
+.feature{
+    background:white;
+    border-radius:15px;
+    padding:35px 25px;
+    text-align:center;
+    box-shadow:0 6px 15px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.feature:hover{
+    transform:translateY(-6px);
+    box-shadow:0 8px 25px rgba(11,79,58,0.15);
+}
+
+.feature i{
+    font-size:45px;
+    color:#0B4F3A;
+    margin-bottom:15px;
+}
+
+.feature i:hover{
+    transform:scale(1.1) rotate(-5deg);
+}
+
+.feature h5{
+    font-weight:600;
+    margin-bottom:12px;
+    color:#0B4F3A;
+}
+
+.feature p{
+    color:#555;
+}
+
+/* ===============================
+   FOOTER
+=================================*/
+
+footer{
+    background:#0B4F3A;
+    color:white;
+    text-align:center;
+    padding:22px;
+    margin-top:50px;
+}
+
+/* ===============================
+   RESPONSIVE
+=================================*/
+
+@media(max-width:992px){
+    .hero h1{
+        font-size:45px;
+    }
+    .hero-text{
+        width:90%;
+    }
+    .about{
+        width:90%;
+    }
+}
+
+@media(max-width:768px){
+    .hero{
+        padding:70px 15px;
+    }
+    .hero h1{
+        font-size:36px;
+    }
+    .hero h4{
+        font-size:20px;
+    }
+    .hero-text{
+        width:100%;
+        font-size:16px;
+    }
+    .portal{
+        margin-bottom:20px;
+    }
+    .about{
+        width:100%;
+    }
+    .section-title h2{
+        font-size:30px;
+    }
+}

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | EduMania</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/admin-dashboard.css">
+
+</head>
+
+<body>
+
+    <!-- ========== SIDEBAR ========== -->
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <i class="bi bi-mortarboard-fill"></i>
+            <h3>EduMania</h3>
+            <span>Admin Portal</span>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li class="active">
+                <i class="bi bi-speedometer2"></i>
+                <a href="#">Dashboard</a>
+            </li>
+            <li>
+                <i class="bi bi-person-plus"></i>
+                <a href="#add-student">Add Student</a>
+            </li>
+            <li>
+                <i class="bi bi-person-workspace"></i>
+                <a href="#add-faculty">Add Faculty</a>
+            </li>
+            <li>
+                <i class="bi bi-search"></i>
+                <a href="#search-student">Search Student</a>
+            </li>
+            <li>
+                <i class="bi bi-search"></i>
+                <a href="#search-faculty">Search Faculty</a>
+            </li>
+            <li>
+                <i class="bi bi-people-fill"></i>
+                <a href="#all-students">All Students</a>
+            </li>
+            <li>
+                <i class="bi bi-people"></i>
+                <a href="#all-faculty">All Faculty</a>
+            </li>
+            
+        </ul>
+
+        <div class="sidebar-footer">
+            <div class="user-card">
+                <img th:src="'https://ui-avatars.com/api/?name=' + ${admin.firstName} + '+' + ${admin.lastName} + '&background=1A237E&color=fff&size=40'" alt="User">
+                <div class="user-info">
+                    <h6 th:text="${admin.firstName + ' ' + admin.lastName}">Super Admin</h6>
+                    <small>Administrator</small>
+                </div>
+                <a href="/logout" class="logout-btn">
+                    <i class="bi bi-box-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <div class="main-content">
+
+        <!-- Top Header -->
+        <div class="top-header">
+            <h4>Admin Dashboard</h4>
+            <div class="header-right">
+                <span>Welcome, <strong th:text="${admin.firstName}">Super Admin</strong>!</span>
+            </div>
+        </div>
+
+        <!-- Alert Messages -->
+        <div th:if="${success}" class="alert alert-success alert-dismissible fade show">
+            <i class="bi bi-check-circle-fill"></i> <span th:text="${success}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show">
+            <i class="bi bi-exclamation-circle-fill"></i> <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-3 col-6">
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    <h3 th:text="${totalStudents}">0</h3>
+                    <p>Total Students</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <h3 th:text="${totalFaculty}">0</h3>
+                    <p>Total Faculty</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-card">
+                    <div class="stat-icon yellow">
+                        <i class="bi bi-journal-bookmark-fill"></i>
+                    </div>
+                    <h3 th:text="${totalCourses}">0</h3>
+                    <p>Total Courses</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <h3 th:text="${totalAdmins}">0</h3>
+                    <p>Total Admins</p>
+                </div>
+            </div>
+        </div>
+
+<!-- ========================================== -->
+<!-- ===== SECTION 1: ADD STUDENT ===== -->
+<!-- ========================================== -->
+        
+<div class="section-card" id="add-student">
+    <div class="card-header-custom">
+        <h5><i class="bi bi-person-plus"></i> Add Student</h5>
+    </div>
+
+    <div class="form-card">
+        <form action="/admin/add-student" method="post">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">First Name</label>
+                    <input type="text" name="firstName" class="form-control" placeholder="student first name" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Last Name</label>
+                    <input type="text" name="lastName" class="form-control" placeholder="student last name" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" placeholder="student@edumania.com" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Password</label>
+                    <input type="text" name="password" class="form-control" placeholder="password123" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Department</label>
+                    <select name="department" class="form-select" required>
+                        <option value="">Select Department</option>
+                        <option value="Maths">Maths</option>
+                        <option value="Science">Science</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Year</label>
+                    <select name="year" class="form-select" required>
+                        <option value="">Select Year</option>
+                        <option value="1st Year">1st Year</option>
+                        <option value="2nd Year">2nd Year</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn-add">
+                        <i class="bi bi-plus-circle"></i> Add Student
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+      <!-- ========================================== -->
+<!-- ===== SECTION 2: ADD FACULTY ===== -->
+<!-- ========================================== -->
+        
+<div class="section-card" id="add-faculty">
+    <div class="card-header-custom">
+        <h5><i class="bi bi-person-workspace"></i> Add Faculty</h5>
+    </div>
+
+    <div class="form-card">
+        <form action="/admin/add-faculty" method="post">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">First Name</label>
+                    <input type="text" name="firstName" class="form-control" placeholder="faculty first name" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Last Name</label>
+                    <input type="text" name="lastName" class="form-control" placeholder="faculty last name" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" placeholder="faculty@edumania.com" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Password</label>
+                    <input type="text" name="password" class="form-control" placeholder="password123" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Department</label>
+                    <select name="department" class="form-select" required>
+                        <option value="">Select Department</option>
+                        <option value="Maths">Maths</option>
+                        <option value="Science">Science</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Designation</label>
+                    <select name="designation" class="form-select" required>
+                        <option value="">Select Designation</option>
+                        <option value="Professor">Professor</option>
+                        <option value="Associate Professor">Associate Professor</option>
+                        <option value="Assistant Professor">Assistant Professor</option>
+                        <option value="Lecturer">Lecturer</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn-add">
+                        <i class="bi bi-plus-circle"></i> Add Faculty
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+        <!-- ========================================== -->
+        <!-- ===== SECTION 3: SEARCH STUDENT ===== -->
+        <!-- ========================================== -->
+        
+        <div class="section-card" id="search-student">
+            <div class="card-header-custom">
+                <h5><i class="bi bi-search"></i> Search Student</h5>
+            </div>
+
+            <div class="form-card">
+                <form action="/admin/search-student" method="get" class="row g-3">
+                    <div class="col-md-10">
+                        <input type="text" name="keyword" class="form-control" placeholder="Search by name or email..." required>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn-search w-100">
+                            <i class="bi bi-search"></i> Search
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Search Results -->
+                <div th:if="${searchedStudent != null}" class="mt-4">
+                    <div class="result-card">
+                        <div class="result-header">
+                            <h6>Student Found</h6>
+                            <form action="/admin/delete-student" method="post" style="display:inline;">
+                                <input type="hidden" name="studentId" th:value="${searchedStudent.id}">
+                                <button type="submit" class="btn-delete" onclick="return confirm('Are you sure you want to delete this student?')">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+                            </form>
+                        </div>
+                        <div class="result-body">
+                            <p><strong>Name:</strong> <span th:text="${searchedStudent.firstName + ' ' + searchedStudent.lastName}"></span></p>
+                            <p><strong>Email:</strong> <span th:text="${searchedStudent.email}"></span></p>
+                            <p><strong>Department:</strong> <span th:text="${searchedStudent.department}"></span></p>
+                            <p><strong>Year:</strong> <span th:text="${searchedStudent.year}"></span></p>
+                            <p><strong>Status:</strong> <span th:if="${searchedStudent.active}" class="badge bg-success">Active</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${searchError != null}" class="alert alert-warning mt-3">
+                    <i class="bi bi-exclamation-triangle"></i> <span th:text="${searchError}"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- ===== SECTION 4: SEARCH FACULTY ===== -->
+        <!-- ========================================== -->
+        
+        <div class="section-card" id="search-faculty">
+            <div class="card-header-custom">
+                <h5><i class="bi bi-search"></i> Search Faculty</h5>
+            </div>
+
+            <div class="form-card">
+                <form action="/admin/search-faculty" method="get" class="row g-3">
+                    <div class="col-md-10">
+                        <input type="text" name="keyword" class="form-control" placeholder="Search by name or email..." required>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn-search w-100">
+                            <i class="bi bi-search"></i> Search
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Search Results -->
+                <div th:if="${searchedFaculty != null}" class="mt-4">
+                    <div class="result-card">
+                        <div class="result-header">
+                            <h6>Faculty Found</h6>
+                            <form action="/admin/delete-faculty" method="post" style="display:inline;">
+                                <input type="hidden" name="facultyId" th:value="${searchedFaculty.id}">
+                                <button type="submit" class="btn-delete" onclick="return confirm('Are you sure you want to delete this faculty?')">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+                            </form>
+                        </div>
+                        <div class="result-body">
+                            <p><strong>Name:</strong> <span th:text="${searchedFaculty.firstName + ' ' + searchedFaculty.lastName}"></span></p>
+                            <p><strong>Email:</strong> <span th:text="${searchedFaculty.email}"></span></p>
+                            <p><strong>Department:</strong> <span th:text="${searchedFaculty.department}"></span></p>
+                            <p><strong>Designation:</strong> <span th:text="${searchedFaculty.designation}"></span></p>
+                            <p><strong>Status:</strong> <span th:if="${searchedFaculty.active}" class="badge bg-success">Active</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${facultySearchError != null}" class="alert alert-warning mt-3">
+                    <i class="bi bi-exclamation-triangle"></i> <span th:text="${facultySearchError}"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- ===== SECTION 5: ALL STUDENTS ===== -->
+        <!-- ========================================== -->
+        
+        <div class="section-card" id="all-students">
+            <div class="card-header-custom">
+                <h5><i class="bi bi-people-fill"></i> All Students</h5>
+                <span class="badge bg-primary" th:text="${students.size()}">0</span>
+            </div>
+
+            <div th:if="${students == null or students.isEmpty()}" class="empty-state">
+                <i class="bi bi-people-fill"></i>
+                <p>No students registered yet.</p>
+            </div>
+
+            <div th:if="${students != null and !students.isEmpty()}" class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Department</th>
+                            <th>Year</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="student, iterStat : ${students}">
+                            <td th:text="${iterStat.index + 1}">1</td>
+                            <td th:text="${student.firstName + ' ' + student.lastName}">John Doe</td>
+                            <td th:text="${student.email}">john@email.com</td>
+                            <td th:text="${student.department}">CS</td>
+                            <td th:text="${student.year}">3rd Year</td>
+                            <td>
+                                <span th:if="${student.active}" class="badge bg-success">Active</span>
+                                <span th:unless="${student.active}" class="badge bg-danger">Inactive</span>
+                            </td>
+                            <td>
+                                <form action="/admin/delete-student" method="post" style="display:inline;">
+                                    <input type="hidden" name="studentId" th:value="${student.id}">
+                                    <button type="submit" class="btn-delete-sm" onclick="return confirm('Delete this student?')">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- ===== SECTION 6: ALL FACULTY ===== -->
+        <!-- ========================================== -->
+        
+        <div class="section-card" id="all-faculty">
+            <div class="card-header-custom">
+                <h5><i class="bi bi-people"></i> All Faculty</h5>
+                <span class="badge bg-success" th:text="${faculty.size()}">0</span>
+            </div>
+
+            <div th:if="${faculty == null or faculty.isEmpty()}" class="empty-state">
+                <i class="bi bi-people"></i>
+                <p>No faculty registered yet.</p>
+            </div>
+
+            <div th:if="${faculty != null and !faculty.isEmpty()}" class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Department</th>
+                            <th>Designation</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="facultyMember, iterStat : ${faculty}">
+                            <td th:text="${iterStat.index + 1}">1</td>
+                            <td th:text="${facultyMember.firstName + ' ' + facultyMember.lastName}">Dr. Jane Smith</td>
+                            <td th:text="${facultyMember.email}">jane@email.com</td>
+                            <td th:text="${facultyMember.department}">CS</td>
+                            <td th:text="${facultyMember.designation}">Professor</td>
+                            <td>
+                                <span th:if="${facultyMember.active}" class="badge bg-success">Active</span>
+                                <span th:unless="${facultyMember.active}" class="badge bg-danger">Inactive</span>
+                            </td>
+                            <td>
+                                <form action="/admin/delete-faculty" method="post" style="display:inline;">
+                                    <input type="hidden" name="facultyId" th:value="${facultyMember.id}">
+                                    <button type="submit" class="btn-delete-sm" onclick="return confirm('Delete this faculty?')">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        © 2026 EduMania - Admin Dashboard
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/admin-dashboard.js"></script>
+
+</body>
+
+</html>

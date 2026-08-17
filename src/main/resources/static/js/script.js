@@ -1,0 +1,1 @@
+console.log("EduVerse Loaded Successfully");

@@ -1,0 +1,340 @@
+/* ===========================
+        GLOBAL
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#f4f6f5;
+}
+
+/* ===========================
+        NAVBAR
+=========================== */
+
+.navbar{
+    background:#0B4F3A;
+    padding:15px 40px;
+}
+
+.navbar-brand{
+    color:#fff !important;
+    font-size:28px;
+    font-weight:700;
+    text-decoration:none;
+}
+
+.navbar-brand:hover{
+    color:#fff;
+}
+
+/* ===========================
+        MAIN CONTAINER
+=========================== */
+
+.login-container{
+
+    width:100%;
+
+    min-height:90vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:40px;
+}
+
+/* ===========================
+        LEFT SECTION
+=========================== */
+
+.left-section{
+
+    flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:40px;
+}
+
+.left-section img{
+
+    width:80%;
+
+    max-width:450px;
+}
+
+.left-section h2{
+
+    color:#0B4F3A;
+
+    margin-top:25px;
+
+    font-weight:700;
+}
+
+.left-section p{
+
+    color:#555;
+
+    margin-top:15px;
+
+    text-align:center;
+
+    width:80%;
+}
+
+/* ===========================
+        RIGHT SECTION
+=========================== */
+
+.right-section{
+
+    flex:1;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+}
+
+/* ===========================
+        LOGIN CARD
+=========================== */
+
+.login-card{
+
+    background:#fff;
+
+    width:420px;
+
+    padding:40px;
+
+    border-radius:18px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+
+.login-card h2{
+
+    text-align:center;
+
+    color:#0B4F3A;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+}
+
+.login-card p{
+
+    text-align:center;
+
+    color:#666;
+
+    margin-bottom:30px;
+}
+
+/* ===========================
+        INPUTS
+=========================== */
+
+.form-group{
+
+    margin-bottom:20px;
+}
+
+.form-group label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    color:#333;
+
+    font-weight:500;
+}
+
+.form-control{
+
+    width:100%;
+
+    padding:12px 15px;
+
+    border:1px solid #ccc;
+
+    border-radius:8px;
+
+    font-size:16px;
+
+    outline:none;
+
+    transition:.3s;
+}
+
+.form-control:focus{
+
+    border-color:#0B4F3A;
+
+    box-shadow:0 0 5px rgba(11,79,58,.3);
+}
+
+/* ===========================
+      REMEMBER & FORGOT
+=========================== */
+
+.options{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+    font-size:14px;
+}
+
+.options a{
+
+    color:#0B4F3A;
+
+    text-decoration:none;
+
+    font-weight:500;
+}
+
+.options a:hover{
+
+    text-decoration:underline;
+}
+
+/* ===========================
+        LOGIN BUTTON
+=========================== */
+
+.login-btn{
+
+    width:100%;
+
+    padding:12px;
+
+    background:#0B4F3A;
+
+    color:white;
+
+    border:none;
+
+    border-radius:8px;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.login-btn:hover{
+
+    background:#146C43;
+}
+
+/* ===========================
+      REGISTER LINK
+=========================== */
+
+.register{
+
+    text-align:center;
+
+    margin-top:25px;
+
+    color:#555;
+}
+
+.register a{
+
+    color:#0B4F3A;
+
+    text-decoration:none;
+
+    font-weight:600;
+}
+
+.register a:hover{
+
+    text-decoration:underline;
+}
+
+/* ===========================
+        RESPONSIVE
+=========================== */
+
+@media(max-width:992px){
+
+.login-container{
+
+    flex-direction:column;
+
+}
+
+.left-section{
+
+    margin-bottom:30px;
+
+}
+
+.left-section img{
+
+    width:300px;
+
+}
+
+.login-card{
+
+    width:100%;
+}
+
+}
+
+@media(max-width:576px){
+
+.login-container{
+
+    padding:20px;
+}
+
+.login-card{
+
+    padding:30px 25px;
+}
+
+.left-section img{
+
+    width:220px;
+}
+
+.left-section h2{
+
+    font-size:24px;
+}
+
+}

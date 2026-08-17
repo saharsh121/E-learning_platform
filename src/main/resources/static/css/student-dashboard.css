@@ -1,0 +1,586 @@
+/* ===============================
+   GLOBAL
+=================================*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f0f2f5;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* ===============================
+   SIDEBAR - RED THEME
+=================================*/
+
+.sidebar {
+    height: 100vh;
+    width: 260px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: linear-gradient(135deg, #8B0000, #DC143C);
+    color: white;
+    padding: 20px 0;
+    transition: 0.3s;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.sidebar-brand {
+    text-align: center;
+    padding: 20px 0 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-brand i {
+    font-size: 40px;
+    display: block;
+}
+
+.sidebar-brand h3 {
+    margin-top: 10px;
+    font-weight: 700;
+}
+
+.sidebar-brand span {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.sidebar-menu li {
+    padding: 12px 25px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-left: 4px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.sidebar-menu li:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-left-color: #fff;
+}
+
+.sidebar-menu li.active {
+    background: rgba(255, 255, 255, 0.15);
+    border-left-color: #fff;
+}
+
+.sidebar-menu li i {
+    font-size: 20px;
+    width: 25px;
+}
+
+.sidebar-menu li a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    flex: 1;
+}
+
+.sidebar-menu li .badge {
+    background: #ff6b6b;
+    color: white;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.sidebar-footer .user-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sidebar-footer .user-card img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    padding: 2px;
+}
+
+.sidebar-footer .user-card .user-info {
+    flex: 1;
+}
+
+.sidebar-footer .user-card .user-info h6 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.sidebar-footer .user-card .user-info small {
+    opacity: 0.7;
+    font-size: 12px;
+}
+
+.logout-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background: #dc3545;
+    color: white;
+}
+
+/* ===============================
+   MAIN CONTENT
+=================================*/
+
+.main-content {
+    margin-left: 260px;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+/* ===============================
+   TOP HEADER
+=================================*/
+
+.top-header {
+    background: white;
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.top-header h4 {
+    margin: 0;
+    color: #333;
+}
+
+.top-header .header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.top-header .header-right .notification {
+    position: relative;
+    font-size: 22px;
+    color: #555;
+    cursor: pointer;
+}
+
+.top-header .header-right .notification .dot {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    background: #ff6b6b;
+    border-radius: 50%;
+}
+
+/* ===============================
+   STATS CARDS
+=================================*/
+
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: 0.3s;
+    height: 100%;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card .stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.stat-card .stat-icon.green {
+    background: #fce4e4;
+    color: #DC143C;
+}
+
+.stat-card .stat-icon.blue {
+    background: #dbeafe;
+    color: #2563eb;
+}
+
+.stat-card .stat-icon.yellow {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.stat-card .stat-icon.purple {
+    background: #ede9fe;
+    color: #7c3aed;
+}
+
+.stat-card h3 {
+    font-weight: 700;
+    margin: 0;
+    font-size: 28px;
+}
+
+.stat-card p {
+    color: #666;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* ===============================
+   SECTION CARDS
+=================================*/
+
+.section-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 25px;
+}
+
+.section-card .card-header-custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-card .card-header-custom h5 {
+    font-weight: 600;
+    margin: 0;
+    color: #333;
+}
+
+.section-card .card-header-custom h5 i {
+    color: #DC143C;
+    margin-right: 8px;
+}
+
+.section-card .card-header-custom a {
+    color: #DC143C;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.section-card .card-header-custom a:hover {
+    text-decoration: underline;
+}
+
+.section-card .card-header-custom .badge {
+    font-size: 14px;
+    padding: 5px 12px;
+}
+
+/* ===============================
+   COURSE CARDS
+=================================*/
+
+.course-card {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: 0.3s;
+    border: 2px solid transparent;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Available Courses - Blue Border */
+.course-card.available {
+    border-color: #2563eb;
+}
+
+/* Enrolled Courses - Red Border */
+.course-card.enrolled {
+    border-color: #DC143C;
+}
+
+.course-card .course-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin: 0 auto 12px;
+    background: #dbeafe;
+    color: #2563eb;
+}
+
+.course-card.enrolled .course-icon {
+    background: #fce4e4;
+    color: #DC143C;
+}
+
+.course-card h6 {
+    font-weight: 600;
+    margin: 0 0 5px;
+    font-size: 14px;
+}
+
+.course-card small {
+    color: #666;
+    font-size: 12px;
+}
+
+.course-card .course-desc {
+    font-size: 12px;
+    color: #666;
+    margin: 10px 0;
+    flex: 1;
+}
+
+.course-card .course-progress {
+    margin: 10px 0;
+}
+
+.course-card .course-progress .progress {
+    height: 6px;
+    border-radius: 10px;
+}
+
+.course-card .course-progress .progress-bar {
+    background: #DC143C;
+    border-radius: 10px;
+}
+
+.course-card .course-actions {
+    margin-top: 10px;
+}
+
+/* ==========================================
+   REGISTER BUTTON - GREEN (Available Courses)
+==========================================*/
+
+.course-card.available .btn-success {
+    background: #28a745 !important;
+    border-color: #28a745 !important;
+    color: white !important;
+}
+
+.course-card.available .btn-success:hover {
+    background: #1e7e34 !important;
+    border-color: #1e7e34 !important;
+    transform: scale(1.05);
+}
+
+/* ==========================================
+   VIEW COURSE BUTTON - RED (Enrolled Courses)
+==========================================*/
+
+.course-card.enrolled .btn-primary {
+    background: #DC143C !important;
+    border-color: #DC143C !important;
+    color: white !important;
+}
+
+.course-card.enrolled .btn-primary:hover {
+    background: #8B0000 !important;
+    border-color: #8B0000 !important;
+    transform: scale(1.05);
+}
+
+/* ===============================
+   RESOURCE ITEMS
+=================================*/
+
+.resource-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 15px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.resource-item:hover {
+    border-color: #DC143C;
+    background: #f8fafc;
+}
+
+.resource-item .resource-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: #fce4e4;
+    color: #dc2626;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.resource-item .resource-info {
+    flex: 1;
+}
+
+.resource-item .resource-info h6 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.resource-item .resource-info small {
+    color: #666;
+    font-size: 12px;
+}
+
+.resource-item .btn-primary {
+    background: #DC143C;
+    border-color: #DC143C;
+}
+
+.resource-item .btn-primary:hover {
+    background: #8B0000;
+    border-color: #8B0000;
+}
+
+/* ===============================
+   RESPONSIVE
+=================================*/
+
+@media (max-width: 992px) {
+    .sidebar {
+        width: 70px;
+    }
+
+    .sidebar-brand h3,
+    .sidebar-brand span,
+    .sidebar-menu li a,
+    .sidebar-menu li .badge,
+    .sidebar-footer .user-card .user-info {
+        display: none;
+    }
+
+    .sidebar-menu li {
+        justify-content: center;
+        padding: 15px;
+    }
+
+    .sidebar-menu li i {
+        font-size: 22px;
+        margin: 0;
+    }
+
+    .main-content {
+        margin-left: 70px;
+    }
+
+    .sidebar-footer .user-card {
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .sidebar-footer .user-card img {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .sidebar {
+        width: 0;
+        overflow: hidden;
+    }
+
+    .sidebar.active {
+        width: 260px;
+    }
+
+    .top-header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .top-header h4 {
+        font-size: 18px;
+    }
+
+    .stat-card h3 {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 576px) {
+    .stat-card {
+        padding: 15px;
+    }
+
+    .stat-card .stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .stat-card h3 {
+        font-size: 18px;
+    }
+
+    .section-card {
+        padding: 15px;
+    }
+
+    .course-card {
+        padding: 15px;
+    }
+}

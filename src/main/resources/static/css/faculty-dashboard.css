@@ -1,0 +1,671 @@
+/* ===============================
+   FACULTY DASHBOARD CSS
+   EduMania - Faculty Portal
+=================================*/
+
+/* ===============================
+   GLOBAL
+=================================*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f0f2f5;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* ===============================
+   SIDEBAR
+=================================*/
+
+.sidebar {
+    height: 100vh;
+    width: 260px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: linear-gradient(135deg, #6D4C2A, #8B5E3C);
+    color: white;
+    padding: 20px 0;
+    transition: 0.3s;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.sidebar-brand {
+    text-align: center;
+    padding: 20px 0 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-brand i {
+    font-size: 40px;
+    display: block;
+}
+
+.sidebar-brand h3 {
+    margin-top: 10px;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.sidebar-brand span {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.sidebar-menu li {
+    padding: 12px 25px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-left: 4px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.sidebar-menu li:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-left-color: #fff;
+}
+
+.sidebar-menu li.active {
+    background: rgba(255, 255, 255, 0.15);
+    border-left-color: #fff;
+}
+
+.sidebar-menu li i {
+    font-size: 20px;
+    width: 25px;
+}
+
+.sidebar-menu li a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    flex: 1;
+}
+
+.sidebar-menu li a:hover {
+    color: white;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.sidebar-footer .user-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sidebar-footer .user-card img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    padding: 2px;
+}
+
+.sidebar-footer .user-card .user-info {
+    flex: 1;
+}
+
+.sidebar-footer .user-card .user-info h6 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px;
+    color: white;
+}
+
+.sidebar-footer .user-card .user-info small {
+    opacity: 0.7;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.logout-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background: #dc3545;
+    color: white;
+}
+
+/* ===============================
+   MAIN CONTENT
+=================================*/
+
+.main-content {
+    margin-left: 260px;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+/* ===============================
+   TOP HEADER
+=================================*/
+
+.top-header {
+    background: white;
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.top-header h4 {
+    margin: 0;
+    color: #333;
+    font-weight: 600;
+}
+
+.top-header .header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.top-header .header-right span {
+    color: #555;
+}
+
+.top-header .header-right strong {
+    color: #6D4C2A;
+}
+
+.menu-toggle {
+    background: transparent;
+    border: none;
+    padding: 5px 10px;
+    margin-right: 10px;
+}
+
+.menu-toggle i {
+    font-size: 24px;
+    color: #333;
+}
+
+/* ===============================
+   SECTION CARDS
+=================================*/
+
+.section-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 25px;
+}
+
+.section-card .card-header-custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-card .card-header-custom h5 {
+    font-weight: 600;
+    margin: 0;
+    color: #6D4C2A;
+    font-size: 18px;
+}
+
+.section-card .card-header-custom h5 i {
+    margin-right: 8px;
+}
+
+/* ===============================
+   ALERT MESSAGES
+=================================*/
+
+.alert {
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+}
+
+.alert-success {
+    background: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.alert-danger {
+    background: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+.alert i {
+    margin-right: 10px;
+}
+
+/* ===============================
+   UPLOAD FORM
+=================================*/
+
+.upload-form {
+    background: #f8fafc;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+}
+
+.upload-form .form-label {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.upload-form .form-control,
+.upload-form .form-select {
+    border-radius: 8px;
+    border: 2px solid #e5e7eb;
+    padding: 10px 15px;
+    transition: 0.3s;
+}
+
+.upload-form .form-control:focus,
+.upload-form .form-select:focus {
+    border-color: #6D4C2A;
+    box-shadow: 0 0 0 3px rgba(109, 76, 42, 0.1);
+}
+
+.upload-form .form-control::placeholder {
+    color: #aaa;
+}
+
+.upload-form .form-control[type="file"] {
+    padding: 8px;
+}
+
+.upload-form .form-control[type="file"]::file-selector-button {
+    background: #6D4C2A;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: 0.3s;
+}
+
+.upload-form .form-control[type="file"]::file-selector-button:hover {
+    background: #8B5E3C;
+}
+
+.btn-upload {
+    background: #6D4C2A;
+    color: white;
+    border: none;
+    padding: 12px 35px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 16px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.btn-upload:hover {
+    background: #8B5E3C;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(109, 76, 42, 0.3);
+}
+
+.btn-upload i {
+    margin-right: 8px;
+}
+
+/* ===============================
+   LECTURE/NOTE LIST
+=================================*/
+
+.lecture-list {
+    margin-top: 20px;
+}
+
+.lecture-list h6 {
+    font-weight: 600;
+    color: #333;
+    font-size: 16px;
+}
+
+.lecture-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 15px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: 0.3s;
+}
+
+.lecture-item:hover {
+    border-color: #6D4C2A;
+    background: #f8fafc;
+}
+
+.lecture-item .lecture-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: #dbeafe;
+    color: #2563eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.lecture-item .lecture-icon.video-icon {
+    background: #dbeafe;
+    color: #2563eb;
+}
+
+.lecture-item .lecture-icon.pdf-icon {
+    background: #fce4e4;
+    color: #dc2626;
+}
+
+.lecture-item .lecture-info {
+    flex: 1;
+}
+
+.lecture-item .lecture-info h6 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+}
+
+.lecture-item .lecture-info small {
+    color: #666;
+    font-size: 12px;
+}
+
+.lecture-item .lecture-info small span {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+/* ===============================
+   BADGES
+=================================*/
+
+.badge-physics {
+    background: #2563eb;
+    color: white;
+    padding: 2px 12px;
+    border-radius: 12px;
+    font-size: 11px;
+}
+
+.badge-chemistry {
+    background: #d97706;
+    color: white;
+    padding: 2px 12px;
+    border-radius: 12px;
+    font-size: 11px;
+}
+
+.badge-biology {
+    background: #0B4F3A;
+    color: white;
+    padding: 2px 12px;
+    border-radius: 12px;
+    font-size: 11px;
+}
+
+/* ===============================
+   BUTTONS
+=================================*/
+
+.btn-sm {
+    padding: 4px 12px;
+    font-size: 12px;
+    border-radius: 6px;
+}
+
+.btn-outline-primary {
+    color: #6D4C2A;
+    border: 2px solid #6D4C2A;
+    background: transparent;
+    transition: 0.3s;
+}
+
+.btn-outline-primary:hover {
+    background: #6D4C2A;
+    color: white;
+}
+
+.btn-outline-success {
+    color: #0B4F3A;
+    border: 2px solid #0B4F3A;
+    background: transparent;
+    transition: 0.3s;
+}
+
+.btn-outline-success:hover {
+    background: #0B4F3A;
+    color: white;
+}
+
+.btn-delete {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.btn-delete:hover {
+    background: #c82333;
+}
+
+/* ===============================
+   EMPTY STATE
+=================================*/
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.empty-state i {
+    font-size: 48px;
+    color: #d1d5db;
+}
+
+.empty-state p {
+    color: #999;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* ===============================
+   FOOTER
+=================================*/
+
+.footer {
+    background: #6D4C2A;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 30px;
+    border-radius: 0 0 12px 12px;
+}
+
+/* ===============================
+   RESPONSIVE
+=================================*/
+
+/* Tablet */
+@media (max-width: 992px) {
+    .sidebar {
+        width: 70px;
+    }
+
+    .sidebar-brand h3,
+    .sidebar-brand span,
+    .sidebar-menu li a,
+    .sidebar-footer .user-card .user-info {
+        display: none;
+    }
+
+    .sidebar-menu li {
+        justify-content: center;
+        padding: 15px;
+    }
+
+    .sidebar-menu li i {
+        font-size: 22px;
+        margin: 0;
+    }
+
+    .main-content {
+        margin-left: 70px;
+    }
+
+    .sidebar-footer .user-card {
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .sidebar-footer .user-card img {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .sidebar {
+        width: 0;
+        overflow: hidden;
+    }
+
+    .sidebar.active {
+        width: 260px;
+    }
+
+    .top-header {
+        flex-direction: row;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .top-header h4 {
+        font-size: 18px;
+        flex: 1;
+    }
+
+    .section-card {
+        padding: 15px;
+    }
+
+    .upload-form {
+        padding: 15px;
+    }
+
+    .lecture-item {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .lecture-item .lecture-info {
+        flex: 1 1 100%;
+    }
+
+    .btn-upload {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .course-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 8px;
+    }
+
+    .course-tab {
+        white-space: nowrap;
+        font-size: 13px;
+        padding: 6px 15px;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 576px) {
+    .top-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .top-header .header-right {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .upload-form .row .col-md-4,
+    .upload-form .row .col-md-6 {
+        margin-bottom: 10px;
+    }
+
+    .lecture-item {
+        padding: 10px;
+    }
+
+    .lecture-item .lecture-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 15px;
+    }
+
+    .footer {
+        font-size: 12px;
+    }
+}
