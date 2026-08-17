@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Quiz | Faculty</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Poppins', sans-serif; background: #f0f2f5; }
+        .navbar { background: linear-gradient(135deg, #6D4C2A, #8B5E3C); padding: 12px 0; }
+        .navbar-brand { color: white !important; font-size: 24px; font-weight: 700; }
+        .navbar-brand i { margin-right: 10px; }
+        .form-card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .form-card .form-label { font-weight: 500; color: #333; }
+        .form-card .form-control, .form-card .form-select { border-radius: 8px; border: 2px solid #e5e7eb; padding: 10px 15px; }
+        .form-card .form-control:focus, .form-card .form-select:focus { border-color: #6D4C2A; box-shadow: 0 0 0 3px rgba(109,76,42,0.1); }
+        .btn-submit { background: #6D4C2A; color: white; border: none; padding: 12px 40px; border-radius: 8px; transition: 0.3s; font-weight: 600; }
+        .btn-submit:hover { background: #8B5E3C; color: white; }
+    </style>
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="/faculty/quizzes" class="navbar-brand">
+                <i class="bi bi-mortarboard-fill"></i> EduMania
+            </a>
+            <div>
+                <span class="text-white me-3" th:text="${faculty.firstName}">Faculty</span>
+                <a href="/logout" class="btn btn-danger btn-sm">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 style="color: #6D4C2A;"><i class="bi bi-plus-circle"></i> Create New Quiz</h2>
+            <a href="/faculty/quizzes" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back
+            </a>
+        </div>
+
+        <div class="form-card">
+            <form action="/faculty/quiz/save" method="post">
+                <div class="row g-3">
+                    <div class="col-md-12">
+                        <label class="form-label">Quiz Title</label>
+                        <input type="text" name="title" class="form-control" placeholder="e.g., Physics Quiz 1" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Description</label>
+                        <textarea name="description" class="form-control" rows="2" placeholder="Describe the quiz"></textarea>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Course</label>
+                        <select name="courseId" class="form-select" required>
+                            <option value="">Select Course</option>
+                            <option value="PHY-101">Physics (PHY-101)</option>
+                            <option value="CHEM-101">Chemistry (CHEM-101)</option>
+                            <option value="BIO-101">Biology (BIO-101)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Duration (minutes)</label>
+                        <input type="number" name="duration" class="form-control" placeholder="15" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Passing Score (%)</label>
+                        <input type="number" name="passingScore" class="form-control" placeholder="60" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Difficulty</label>
+                        <select name="difficulty" class="form-select" required>
+                            <option value="Easy">Easy</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="Hard">Hard</option>
+                        </select>
+                    </div>
+                    <div class="col-12 text-center mt-4">
+                        <button type="submit" class="btn-submit">
+                            <i class="bi bi-save"></i> Create Quiz
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

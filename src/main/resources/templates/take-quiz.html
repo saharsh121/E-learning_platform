@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${quiz.title} + ' | EduMania'">Take Quiz | EduMania</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f2f5;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #8B0000, #DC143C);
+            padding: 12px 0;
+        }
+        .navbar-brand {
+            color: white !important;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .navbar-brand i { margin-right: 10px; }
+
+        .question-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            border-left: 4px solid #DC143C;
+        }
+        .question-card .question-number {
+            background: #DC143C;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .option-label {
+            display: block;
+            padding: 10px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .option-label:hover {
+            border-color: #DC143C;
+            background: #f8fafc;
+        }
+        .option-label input[type="radio"] {
+            margin-right: 10px;
+        }
+        .option-label.selected {
+            border-color: #DC143C;
+            background: #fce4e4;
+        }
+        .timer {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 100;
+            margin-bottom: 20px;
+        }
+        .timer .time {
+            font-size: 32px;
+            font-weight: 700;
+            color: #DC143C;
+        }
+        .timer .warning {
+            color: #dc3545;
+        }
+        .btn-submit {
+            background: #DC143C;
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn-submit:hover {
+            background: #8B0000;
+            color: white;
+        }
+        .btn-submit:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        .progress-container {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        .progress {
+            height: 8px;
+        }
+        .progress-bar {
+            background: #DC143C;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="/student/quizzes" class="navbar-brand">
+                <i class="bi bi-mortarboard-fill"></i> EduMania
+            </a>
+            <div>
+                <span class="text-white me-3" th:text="${student.firstName}">Student</span>
+                <a href="/logout" class="btn btn-danger btn-sm">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+
+        <!-- Quiz Header -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2 style="color: #DC143C;" th:text="${quiz.title}">Quiz Title</h2>
+                <p class="text-muted" th:text="${quiz.description}">Description</p>
+            </div>
+            <a href="/student/quizzes" class="btn btn-secondary">
+                <i class="bi bi-x-lg"></i> Quit
+            </a>
+        </div>
+
+        <!-- Timer & Progress -->
+        <div class="timer">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <span><i class="bi bi-clock"></i> Time Remaining:</span>
+                    <span class="time" id="timer">15:00</span>
+                </div>
+                <div class="col-md-4">
+                    <span>Question <span id="currentQuestion">1</span> of <span th:text="${questions.size()}">5</span></span>
+                </div>
+                <div class="col-md-4">
+                    <span>Answered: <span id="answeredCount">0</span> / <span th:text="${questions.size()}">5</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress">
+                <div class="progress-bar" id="progressBar" style="width: 0%;"></div>
+            </div>
+        </div>
+
+        <!-- Quiz Form -->
+        <form id="quizForm" action="/student/quiz/submit" method="post">
+            <input type="hidden" name="quizId" th:value="${quiz.quizId}">
+
+            <div th:each="question, iterStat : ${questions}">
+                <div class="question-card" th:id="'question-' + ${question.id}">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <span class="question-number" th:text="${iterStat.index + 1}">1</span>
+                        <h5 class="mb-0" th:text="${question.questionText}">Question text</h5>
+                        <span class="badge bg-secondary ms-auto" th:text="${question.marks} + ' marks'">2 marks</span>
+                    </div>
+
+                    <div class="options">
+                        <div th:each="option, optIndex : ${question.options}">
+                            <label class="option-label" th:classappend="${selected}">
+                                <input type="radio" 
+                                       th:name="'question_' + ${question.id}" 
+                                       th:value="${optIndex.index}"
+                                       th:id="'q' + ${question.id} + 'opt' + ${optIndex.index}"
+                                       onchange="updateProgress()">
+                                <span th:text="${option}">Option text</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    <i class="bi bi-check-circle"></i> Submit Quiz
+                </button>
+            </div>
+        </form>
+
+    </div>
+
+    <script>
+        // ==========================================
+        // TIMER FUNCTIONALITY
+        // ==========================================
+        
+        let timeLeft = <span th:text="${quiz.duration}">15</span> * 60; // Convert minutes to seconds
+        const timerDisplay = document.getElementById('timer');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            
+            if (timeLeft <= 60) {
+                timerDisplay.classList.add('warning');
+            }
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.textContent = '00:00';
+                alert('⏰ Time is up! Submitting your quiz...');
+                document.getElementById('quizForm').submit();
+            }
+            timeLeft--;
+        }
+        
+        const timerInterval = setInterval(updateTimer, 1000);
+        updateTimer();
+
+        // ==========================================
+        // PROGRESS FUNCTIONALITY
+        // ==========================================
+        
+        const totalQuestions = <span th:text="${questions.size()}">5</span>;
+        const progressBar = document.getElementById('progressBar');
+        const currentQuestionSpan = document.getElementById('currentQuestion');
+        const answeredCountSpan = document.getElementById('answeredCount');
+        
+        function updateProgress() {
+            const radioButtons = document.querySelectorAll('input[type="radio"]');
+            const answered = new Set();
+            
+            radioButtons.forEach(radio => {
+                if (radio.checked) {
+                    const name = radio.name;
+                    answered.add(name);
+                }
+            });
+            
+            const answeredCount = answered.size;
+            const progress = (answeredCount / totalQuestions) * 100;
+            
+            progressBar.style.width = progress + '%';
+            answeredCountSpan.textContent = answeredCount;
+        }
+
+        // ==========================================
+        // OPTION SELECTION STYLING
+        // ==========================================
+        
+        document.querySelectorAll('.option-label').forEach(label => {
+            label.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+                
+                // Remove selected class from siblings
+                const parent = this.closest('.options');
+                parent.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                updateProgress();
+            });
+        });
+
+        // ==========================================
+        // AUTO-SAVE PROGRESS ON LOAD
+        // ==========================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+        });
+
+        // ==========================================
+        // CONFIRM SUBMIT
+        // ==========================================
+        
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            const confirmed = confirm('⚠️ Are you sure you want to submit your quiz?');
+            if (!confirmed) {
+                e.preventDefault();
+            }
+        });
+    </script>
+
+</body>
+
+</html>

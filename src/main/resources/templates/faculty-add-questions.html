@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Questions | Faculty</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Poppins', sans-serif; background: #f0f2f5; }
+        .navbar { background: linear-gradient(135deg, #6D4C2A, #8B5E3C); padding: 12px 0; }
+        .navbar-brand { color: white !important; font-size: 24px; font-weight: 700; }
+        .navbar-brand i { margin-right: 10px; }
+        .form-card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .question-card { background: #f8fafc; border-radius: 10px; padding: 20px; margin-bottom: 15px; border-left: 4px solid #6D4C2A; }
+        .question-card .q-text { font-weight: 500; }
+        .question-card .q-options { color: #555; font-size: 14px; }
+        .option-correct { color: #28a745; font-weight: 500; }
+        .btn-submit { background: #6D4C2A; color: white; border: none; padding: 12px 40px; border-radius: 8px; transition: 0.3s; font-weight: 600; }
+        .btn-submit:hover { background: #8B5E3C; color: white; }
+        .btn-add { background: #28a745; color: white; border: none; padding: 12px 40px; border-radius: 8px; transition: 0.3s; font-weight: 600; }
+        .btn-add:hover { background: #1e7e34; color: white; }
+    </style>
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="/faculty/quizzes" class="navbar-brand">
+                <i class="bi bi-mortarboard-fill"></i> EduMania
+            </a>
+            <div>
+                <span class="text-white me-3" th:text="${faculty.firstName}">Faculty</span>
+                <a href="/logout" class="btn btn-danger btn-sm">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 style="color: #6D4C2A;"><i class="bi bi-plus-circle"></i> <span th:text="${quiz.title}">Quiz</span></h2>
+                <p class="text-muted">Quiz ID: <span th:text="${quiz.quizId}">QUIZ-001</span> | Questions: <span th:text="${questions.size()}">0</span></p>
+            </div>
+            <div>
+                <a href="/faculty/quiz/create" class="btn-add me-2">
+                    <i class="bi bi-plus-circle"></i> New Quiz
+                </a>
+                <a href="/faculty/quizzes" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Back
+                </a>
+            </div>
+        </div>
+
+        <!-- Alert Messages -->
+        <div th:if="${success}" class="alert alert-success alert-dismissible fade show">
+            <span th:text="${success}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show">
+            <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <!-- Add Question Form -->
+        <div class="form-card mb-4">
+            <h5><i class="bi bi-plus-circle"></i> Add New Question</h5>
+            <hr>
+            <form action="/faculty/quiz/add-question" method="post">
+                <input type="hidden" name="quizId" th:value="${quiz.id}">
+
+                <div class="row g-3">
+                    <div class="col-md-12">
+                        <label class="form-label">Question</label>
+                        <input type="text" name="questionText" class="form-control" placeholder="Enter question" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Option A</label>
+                        <input type="text" name="options" class="form-control" placeholder="Option A" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Option B</label>
+                        <input type="text" name="options" class="form-control" placeholder="Option B" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Option C</label>
+                        <input type="text" name="options" class="form-control" placeholder="Option C" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Option D</label>
+                        <input type="text" name="options" class="form-control" placeholder="Option D" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Correct Option</label>
+                        <select name="correctOptionIndex" class="form-select" required>
+                            <option value="0">Option A</option>
+                            <option value="1">Option B</option>
+                            <option value="2">Option C</option>
+                            <option value="3">Option D</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Marks</label>
+                        <input type="number" name="marks" class="form-control" placeholder="2" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Explanation (Optional)</label>
+                        <input type="text" name="explanation" class="form-control" placeholder="Why this answer is correct">
+                    </div>
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn-add">
+                            <i class="bi bi-plus-circle"></i> Add Question
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Existing Questions -->
+        <h5><i class="bi bi-list-check"></i> Questions (<span th:text="${questions.size()}">0</span>)</h5>
+
+        <div th:if="${questions == null or questions.isEmpty()}" class="text-center py-4">
+            <p class="text-muted">No questions added yet. Add your first question above!</p>
+        </div>
+
+        <div th:each="q : ${questions}">
+            <div class="question-card">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <span class="q-text" th:text="${q.questionText}">Question text</span>
+                        <span class="badge bg-secondary ms-2" th:text="${q.marks} + ' marks'">2 marks</span>
+                    </div>
+                    <form action="/faculty/quiz/delete-question" method="post" style="display:inline;">
+                        <input type="hidden" name="questionId" th:value="${q.id}">
+                        <input type="hidden" name="quizId" th:value="${quiz.id}">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this question?')">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="q-options mt-2">
+                    <div th:each="opt, idx : ${q.options}">
+                        <span th:if="${idx.index == q.correctOptionIndex}" class="option-correct">✅</span>
+                        <span th:unless="${idx.index == q.correctOptionIndex}">•</span>
+                        <span th:text="${opt}">Option</span>
+                    </div>
+                    <div th:if="${q.explanation}" class="mt-1 text-muted small">
+                        <i class="bi bi-lightbulb"></i> <span th:text="${q.explanation}">Explanation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="text-center mt-4">
+            <a th:href="'/faculty/quiz/add-questions/' + ${quiz.id}" class="btn btn-outline-secondary me-2">
+                <i class="bi bi-arrow-repeat"></i> Refresh
+            </a>
+            <a href="/faculty/quizzes" class="btn btn-secondary">
+                <i class="bi bi-check-circle"></i> Done
+            </a>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
