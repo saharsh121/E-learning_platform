@@ -177,40 +177,71 @@ body{
    FEATURES
 =================================*/
 
-.feature{
-    background:white;
-    border-radius:15px;
-    padding:35px 25px;
-    text-align:center;
-    box-shadow:0 6px 15px rgba(0,0,0,.08);
-    transition:.3s;
+/* ===============================
+   FEATURES
+=================================*/
+
+.feature {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 35px 25px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    height: 100%;
 }
 
-.feature:hover{
-    transform:translateY(-6px);
-    box-shadow:0 8px 25px rgba(11,79,58,0.15);
+/* Feature Card Hover */
+
+.feature:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(11, 79, 58, 0.18);
 }
 
-.feature i{
-    font-size:45px;
-    color:#0B4F3A;
-    margin-bottom:15px;
+
+/* ===============================
+   FEATURE ICONS
+=================================*/
+
+.feature i {
+    display: inline-block;
+    font-size: 60px;
+    line-height: 1;
+    color: #0B4F3A;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
 }
 
-.feature i:hover{
-    transform:scale(1.1) rotate(-5deg);
+
+/* Icon Hover */
+
+.feature:hover i {
+    transform: scale(1.1) rotate(-5deg);
 }
 
-.feature h5{
-    font-weight:600;
-    margin-bottom:12px;
-    color:#0B4F3A;
+
+/* ===============================
+   FEATURE HEADING
+=================================*/
+
+.feature h5 {
+    font-size: 21px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #0B4F3A;
 }
 
-.feature p{
-    color:#555;
-}
 
+/* ===============================
+   FEATURE DESCRIPTION
+=================================*/
+
+.feature p {
+    color: #555;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
 /* ===============================
    FOOTER
 =================================*/
