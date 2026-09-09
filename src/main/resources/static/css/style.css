@@ -1,296 +1,475 @@
-/* ===============================
-   GLOBAL
-=================================*/
+/* =========================================================
+   EduMania - Professional Stylesheet
+   ========================================================= */
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+/* ---------- Root Variables ---------- */
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --secondary: #0f172a;
+    --accent: #06b6d4;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+
+    --background: #f8fafc;
+    --surface: #ffffff;
+    --surface-soft: #f1f5f9;
+
+    --text: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+
+    --border: #e2e8f0;
+
+    --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.06);
+    --shadow-md: 0 12px 30px rgba(15, 23, 42, 0.10);
+    --shadow-lg: 0 20px 45px rgba(15, 23, 42, 0.14);
+
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 22px;
+
+    --transition: all 0.3s ease;
 }
 
-body{
-    font-family:'Poppins',sans-serif;
-    background:#f4f6f5;
-    color:#222;
+/* ---------- Global ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* ===============================
-   NAVBAR
-=================================*/
-
-.navbar{
-    background:#0B4F3A;
-    padding:15px 0;
+html {
+    scroll-behavior: smooth;
 }
 
-.navbar-brand{
-    color:white !important;
-    font-size:30px;
-    font-weight:700;
+body {
+    font-family: "Poppins", sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
 }
 
-.nav-link{
-    color:white !important;
-    margin-left:20px;
-    font-size:17px;
-    transition:.3s;
+a {
+    text-decoration: none;
 }
 
-.nav-link:hover{
-    color:#cfe9df !important;
+section {
+    scroll-margin-top: 80px;
 }
 
-/* ===============================
-   HERO
-=================================*/
-
-.hero{
-    background:#0B4F3A;
-    color:white;
-    text-align:center;
-    padding:90px 20px;
+/* ---------- Hero ---------- */
+.hero {
+    min-height: 460px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 90px 0;
+    color: #ffffff;
+    background:
+        radial-gradient(circle at 85% 20%, rgba(6, 182, 212, 0.28), transparent 30%),
+        radial-gradient(circle at 15% 80%, rgba(37, 99, 235, 0.35), transparent 35%),
+        linear-gradient(135deg, #0f172a 0%, #172554 55%, #1e40af 100%);
 }
 
-.hero h1{
-    font-size:58px;
-    font-weight:700;
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    right: -120px;
+    top: -150px;
 }
 
-.hero h4{
-    margin-top:15px;
-    font-weight:400;
+.hero::after {
+    content: "";
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 50%;
+    right: 80px;
+    bottom: -180px;
 }
 
-.hero-text{
-    width:70%;
-    margin:auto;
-    margin-top:25px;
-    line-height:32px;
-    font-size:18px;
+.hero .container {
+    position: relative;
+    z-index: 2;
 }
 
-/* ===============================
-   LOGIN SECTION
-=================================*/
-
-.login-section{
-    margin-top:-45px;
-    margin-bottom:70px;
+.hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+    margin-bottom: 15px;
 }
 
-/* ===============================
-   LOGIN CARDS - CONSISTENT GREEN
-=================================*/
-
-.portal{
-    background:white;
-    border:none;
-    border-radius:18px;
-    box-shadow:0 8px 20px rgba(0,0,0,.12);
-    transition:.35s;
+.hero h4 {
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: #bfdbfe;
 }
 
-.portal:hover{
-    transform:translateY(-8px);
-    box-shadow:0 15px 30px rgba(11,79,58,0.2);
+.hero-text {
+    max-width: 780px;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 1.05rem;
+    line-height: 1.9;
 }
 
-/* ✅ ALL portals - Consistent Green top border */
-.student,
-.faculty,
-.admin{
-    border-top:6px solid #0B4F3A;
+/* ---------- Login Portals ---------- */
+.login-section {
+    margin-top: -65px;
+    position: relative;
+    z-index: 5;
+    padding-bottom: 70px;
 }
 
-/* ✅ ALL portal icons - Consistent Green */
-.portal i{
-    font-size:55px;
-    color:#0B4F3A;
-    margin:20px;
-}
-
-.portal i:hover{
-    transform:scale(1.1);
-}
-
-.portal h3{
-    font-weight:600;
-    margin-bottom:15px;
-}
-
-.portal p{
-    color:#555;
-    line-height:28px;
-}
-
-/* ===============================
-   BUTTONS - Consistent Green
-=================================*/
-
-.btn-primary,
-.btn-faculty,
-.btn-admin{
-    background:#0B4F3A;
-    border:none;
-    color:white;
-    padding:10px 35px;
-    border-radius:8px;
-    transition:.3s;
-}
-
-.btn-primary:hover,
-.btn-faculty:hover,
-.btn-admin:hover{
-    background:#146C43;
-    color:white;
-    transform:scale(1.05);
-}
-
-/* ===============================
-   SECTION TITLE
-=================================*/
-
-.section-title{
-    text-align:center;
-    margin-bottom:45px;
-}
-
-.section-title h2{
-    font-size:38px;
-    font-weight:700;
-    color:#0B4F3A;
-}
-
-/* ===============================
-   ABOUT
-=================================*/
-
-.about{
-    width:80%;
-    margin:auto;
-    text-align:center;
-    line-height:34px;
-    color:#555;
-}
-
-/* ===============================
-   FEATURES
-=================================*/
-
-/* ===============================
-   FEATURES
-=================================*/
-
-.feature {
-    background: #ffffff;
-    border-radius: 15px;
-    padding: 35px 25px;
-    text-align: center;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
+.portal {
     height: 100%;
+    min-height: 360px;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: var(--radius-lg);
+    background: rgba(255, 255, 255, 0.97);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    transition: var(--transition);
 }
 
-/* Feature Card Hover */
-
-.feature:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 10px 25px rgba(11, 79, 58, 0.18);
+.portal:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
 }
 
-
-/* ===============================
-   FEATURE ICONS
-=================================*/
-
-.feature i {
-    display: inline-block;
-    font-size: 60px;
-    line-height: 1;
-    color: #0B4F3A;
-    margin-bottom: 20px;
-    transition: transform 0.3s ease;
+.portal .card-body {
+    padding: 42px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-
-/* Icon Hover */
-
-.feature:hover i {
-    transform: scale(1.1) rotate(-5deg);
+.portal i {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-bottom: 24px;
+    font-size: 3.1rem !important;
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    box-shadow: 0 12px 25px rgba(37, 99, 235, 0.25);
 }
 
+.portal.faculty i {
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+    box-shadow: 0 12px 25px rgba(124, 58, 237, 0.22);
+}
 
-/* ===============================
-   FEATURE HEADING
-=================================*/
+.portal.admin i {
+    background: linear-gradient(135deg, #dc2626, #f97316);
+    box-shadow: 0 12px 25px rgba(220, 38, 38, 0.22);
+}
 
-.feature h5 {
-    font-size: 21px;
+.portal h3 {
+    font-size: 1.35rem;
     font-weight: 600;
     margin-bottom: 12px;
-    color: #0B4F3A;
 }
 
+.portal p {
+    max-width: 290px;
+    min-height: 76px;
+    color: var(--text-secondary);
+    text-align: center;
+    font-size: 0.94rem;
+    margin-bottom: 22px;
+}
 
-/* ===============================
-   FEATURE DESCRIPTION
-=================================*/
+.portal .btn {
+    min-width: 125px;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    transition: var(--transition);
+}
+
+.portal .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28);
+}
+
+.portal.faculty .btn {
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+}
+
+.portal.admin .btn {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+}
+
+/* ---------- Section Titles ---------- */
+.section-title {
+    margin-bottom: 38px;
+}
+
+.section-title h2 {
+    position: relative;
+    display: inline-block;
+    font-size: 2.15rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+}
+
+.section-title h2::after {
+    content: "";
+    display: block;
+    width: 55px;
+    height: 4px;
+    margin-top: 10px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+}
+
+/* ---------- About ---------- */
+#about {
+    padding-top: 75px !important;
+    padding-bottom: 85px !important;
+}
+
+.about {
+    max-width: 1050px;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.95;
+    padding: 28px 32px;
+    border-left: 4px solid var(--primary);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ---------- Features ---------- */
+#features {
+    padding-bottom: 90px !important;
+}
+
+.feature {
+    height: 100%;
+    min-height: 235px;
+    padding: 30px 26px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.feature:hover {
+    transform: translateY(-7px);
+    border-color: rgba(37, 99, 235, 0.25);
+    box-shadow: var(--shadow-md);
+}
+
+.feature i {
+    width: 62px;
+    height: 62px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    border-radius: 14px;
+    font-size: 2rem;
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.18);
+}
+
+.feature:nth-child(2) i {
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+}
+
+.feature:nth-child(3) i {
+    background: linear-gradient(135deg, #0891b2, #06b6d4);
+}
+
+.feature:nth-child(4) i {
+    background: linear-gradient(135deg, #059669, #10b981);
+}
+
+.feature:nth-child(5) i {
+    background: linear-gradient(135deg, #d97706, #f59e0b);
+}
+
+.feature:nth-child(6) i {
+    background: linear-gradient(135deg, #dc2626, #f97316);
+}
+
+.feature h5 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
 
 .feature p {
-    color: #555;
-    font-size: 16px;
-    line-height: 1.6;
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    line-height: 1.75;
     margin-bottom: 0;
 }
-/* ===============================
-   FOOTER
-=================================*/
 
-footer{
-    background:#0B4F3A;
-    color:white;
-    text-align:center;
-    padding:22px;
-    margin-top:50px;
+/* ---------- Footer ---------- */
+footer {
+    padding: 25px 0;
+    color: #cbd5e1;
+    font-size: 0.88rem;
+    text-align: center;
+    background: #0f172a;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* ===============================
-   RESPONSIVE
-=================================*/
+footer .container {
+    line-height: 1.7;
+}
 
-@media(max-width:992px){
-    .hero h1{
-        font-size:45px;
+/* ---------- Selection ---------- */
+::selection {
+    color: #ffffff;
+    background: var(--primary);
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+    width: 9px;
+}
+
+::-webkit-scrollbar-track {
+    background: #e2e8f0;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+/* ---------- Responsive Design ---------- */
+@media (max-width: 991.98px) {
+    .navbar-nav {
+        margin-top: 12px;
+        padding: 10px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.06);
     }
-    .hero-text{
-        width:90%;
+
+    .nav-link {
+        margin: 2px 0;
     }
-    .about{
-        width:90%;
+
+    .hero {
+        min-height: 420px;
+        padding: 75px 0;
+    }
+
+    .login-section {
+        margin-top: -40px;
     }
 }
 
-@media(max-width:768px){
-    .hero{
-        padding:70px 15px;
+@media (max-width: 767.98px) {
+    .hero {
+        min-height: 390px;
+        padding: 65px 0;
+        text-align: center;
     }
-    .hero h1{
-        font-size:36px;
+
+    .hero h1 {
+        font-size: 2.5rem;
     }
-    .hero h4{
-        font-size:20px;
+
+    .hero h4 {
+        font-size: 1.1rem;
     }
-    .hero-text{
-        width:100%;
-        font-size:16px;
+
+    .hero-text {
+        font-size: 0.95rem;
     }
-    .portal{
-        margin-bottom:20px;
+
+    .login-section {
+        margin-top: 0;
+        padding-top: 45px;
     }
-    .about{
-        width:100%;
+
+    .portal {
+        min-height: 330px;
     }
-    .section-title h2{
-        font-size:30px;
+
+    .section-title h2 {
+        font-size: 1.8rem;
+    }
+
+    .about {
+        padding: 22px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .hero {
+        padding: 55px 0;
+    }
+
+    .hero h1 {
+        font-size: 2.15rem;
+    }
+
+    .portal .card-body {
+        padding: 35px 22px;
+    }
+
+    .feature {
+        min-height: auto;
+    }
+
+    footer {
+        font-size: 0.8rem;
+    }
+}
+
+/* ---------- Accessibility ---------- */
+.nav-link:focus-visible,
+.btn:focus-visible,
+.navbar-toggler:focus-visible {
+    outline: 3px solid rgba(6, 182, 212, 0.45);
+    outline-offset: 3px;
+}
+
+/* ---------- Reduced Motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+        animation: none !important;
     }
 }

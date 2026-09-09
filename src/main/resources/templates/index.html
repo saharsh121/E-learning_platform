@@ -20,58 +20,73 @@
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="css/style.css">
-
+    <link rel="stylesheet" href="css/style.css">    
+    <style>
+    .feature i {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        display: inline-block;
+    }
+</style>
 </head>
 
 <body>
 
     <!-- ================= NAVBAR ================= -->
 
-    <nav class="navbar navbar-expand-lg navbar-dark shadow">
+    <nav class="navbar navbar-expand-lg navbar-light shadow">
 
-        <div class="container">
+    <div class="container">
 
-            <a class="navbar-brand fw-bold" href="#">
-                <i class="bi bi-mortarboard-fill"></i>
-                EduMania
-            </a>
+        <!-- Logo -->
+        <a class="navbar-brand fw-bold" href="#">
+            <i class="bi bi-mortarboard-fill"></i>
+            EduMania
+        </a>
 
-            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+        <!-- Mobile Menu Button -->
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#menu"
+                aria-controls="menu"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
 
-                <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
 
-            </button>
+        </button>
 
-            <div class="collapse navbar-collapse" id="menu">
+        <!-- Navigation -->
+        <div class="collapse navbar-collapse" id="menu">
 
-                <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav ms-auto">
 
-                    <li class="nav-item" >
-                        <a class="nav-link active" href="#">Home</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">
+                        Home
+                    </a>
+                </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">
-                            About
-                        </a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">
+                        About
+                    </a>
+                </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="#features">
-                            Features
-                        </a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#features">
+                        Features
+                    </a>
+                </li>
 
-                    
-
-                </ul>
-
-            </div>
+            </ul>
 
         </div>
 
-    </nav>
+    </div>
+
+</nav>
 
     <!-- ================= HERO ================= -->
 
