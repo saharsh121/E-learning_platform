@@ -53,7 +53,7 @@ MongoDB is used to manage application data such as:
 * Learning content
 * Other platform-related information
 
-## ⚙️ Installation & Setup
+## Installation & Setup
 ### 1. Clone the repository
 ### 2. Open the project
 Open the project in **IntelliJ IDEA**, **Eclipse**, or another Java IDE.
@@ -62,11 +62,11 @@ Make sure MongoDB is installed and running locally or use a MongoDB Atlas databa
 ### 4. Build the project
 ### 5. Run the application
 
-## 📌 Project Purpose
+## Project Purpose
 
 The main objective of this project is to develop a **web-based E-Learning Management System** that simplifies the process of managing and accessing educational content. The project demonstrates the use of **Spring Boot for backend development, RESTful APIs for communication, and MongoDB for flexible data storage**.
 
-## 🔮 Future Enhancements
+## Future Enhancements
 
 * Online video lectures
 * Progress tracking
