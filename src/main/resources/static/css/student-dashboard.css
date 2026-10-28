@@ -1,6 +1,6 @@
-/* ===============================
-   GLOBAL
-=================================*/
+
+
+
 
 * {
     margin: 0;
@@ -17,9 +17,9 @@ a {
     text-decoration: none;
 }
 
-/* ===============================
-   SIDEBAR - RED THEME
-=================================*/
+
+
+
 
 .sidebar {
     height: 100vh;
@@ -156,9 +156,9 @@ a {
     color: white;
 }
 
-/* ===============================
-   MAIN CONTENT
-=================================*/
+
+
+
 
 .main-content {
     margin-left: 260px;
@@ -166,9 +166,9 @@ a {
     min-height: 100vh;
 }
 
-/* ===============================
-   TOP HEADER
-=================================*/
+
+
+
 
 .top-header {
     background: white;
@@ -209,9 +209,9 @@ a {
     border-radius: 50%;
 }
 
-/* ===============================
-   STATS CARDS
-=================================*/
+
+
+
 
 .stat-card {
     background: white;
@@ -270,9 +270,9 @@ a {
     margin: 0;
 }
 
-/* ===============================
-   SECTION CARDS
-=================================*/
+
+
+
 
 .section-card {
     background: white;
@@ -316,9 +316,9 @@ a {
     padding: 5px 12px;
 }
 
-/* ===============================
-   COURSE CARDS
-=================================*/
+
+
+
 
 .course-card {
     background: #f8fafc;
@@ -337,12 +337,12 @@ a {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Available Courses - Blue Border */
+
 .course-card.available {
     border-color: #2563eb;
 }
 
-/* Enrolled Courses - Red Border */
+
 .course-card.enrolled {
     border-color: #DC143C;
 }
@@ -401,9 +401,9 @@ a {
     margin-top: 10px;
 }
 
-/* ==========================================
-   REGISTER BUTTON - GREEN (Available Courses)
-==========================================*/
+
+
+
 
 .course-card.available .btn-success {
     background: #28a745 !important;
@@ -417,9 +417,9 @@ a {
     transform: scale(1.05);
 }
 
-/* ==========================================
-   VIEW COURSE BUTTON - RED (Enrolled Courses)
-==========================================*/
+
+
+
 
 .course-card.enrolled .btn-primary {
     background: #DC143C !important;
@@ -433,9 +433,9 @@ a {
     transform: scale(1.05);
 }
 
-/* ===============================
-   RESOURCE ITEMS
-=================================*/
+
+
+
 
 .resource-item {
     display: flex;
@@ -489,9 +489,9 @@ a {
     border-color: #8B0000;
 }
 
-/* ===============================
-   RESPONSIVE
-=================================*/
+
+
+
 
 @media (max-width: 992px) {
     .sidebar {

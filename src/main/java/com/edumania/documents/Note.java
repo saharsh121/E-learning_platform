@@ -10,21 +10,21 @@ public class Note {
     @Id
     private String id;
     
-    private String courseId;          // Which course this note belongs to
-    private String noteId;            // e.g., PHY-101-NOTE-01
-    private String title;             // Note title
-    private String description;       // Note description
-    private String fileUrl;           // URL to download the note (PDF/DOC)
-    private String fileType;          // PDF, DOC, PPT, etc.
-    private long fileSize;            // File size in bytes
-    private String chapter;           // Chapter name
-    private String uploadedBy;        // Faculty name
-    private String tags;              // Tags for search
-    private long downloads;           // Number of downloads
+    private String courseId;          
+    private String noteId;            
+    private String title;             
+    private String description;       
+    private String fileUrl;           
+    private String fileType;          
+    private long fileSize;            
+    private String chapter;           
+    private String uploadedBy;        
+    private String tags;              
+    private long downloads;           
     private LocalDateTime uploadDate;
     private boolean isActive;
     
-    // Constructor
+    
     public Note() {
         this.uploadDate = LocalDateTime.now();
         this.isActive = true;
@@ -41,7 +41,7 @@ public class Note {
         this.downloads = 0;
     }
     
-    // Getters and Setters
+    
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
     

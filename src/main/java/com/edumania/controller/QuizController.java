@@ -7,6 +7,7 @@ import com.edumania.documents.Quiz;
 import com.edumania.documents.QuizAttempt;
 import com.edumania.services.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +26,9 @@ public class QuizController {
     @Autowired
     private QuizService quizService;
 
-    // ==========================================
-    // STUDENT QUIZ LIST
-    // ==========================================
+    
+    
+    
     
     @GetMapping("/student/quizzes")
     public String studentQuizzes(HttpSession session, Model model) {
@@ -37,7 +38,7 @@ public class QuizController {
             return "redirect:/student-login";
         }
         
-        // Get all active quizzes
+        
         List<Quiz> quizzes = quizService.getAllActiveQuizzes();
         
         model.addAttribute("student", student);
@@ -46,9 +47,9 @@ public class QuizController {
         return "quiz-list";
     }
 
-    // ==========================================
-    // TAKE QUIZ - GET QUESTIONS
-    // ==========================================
+    
+    
+    
     
     @GetMapping("/student/quiz/take/{quizId}")
     public String takeQuiz(
@@ -63,13 +64,13 @@ public class QuizController {
             return "redirect:/student-login";
         }
         
-        // Check if student already attempted this quiz
+        
         if (quizService.hasAttemptedQuiz(student.getId(), quizId)) {
             redirectAttributes.addFlashAttribute("error", "You have already attempted this quiz!");
             return "redirect:/student/quizzes";
         }
         
-        // Get quiz with questions
+        
         Map<String, Object> quizData = quizService.getQuizWithQuestions(quizId);
         
         if (quizData == null) {
@@ -84,9 +85,9 @@ public class QuizController {
         return "take-quiz";
     }
 
-    // ==========================================
-    // SUBMIT QUIZ
-    // ==========================================
+    
+    
+    
     
     @PostMapping("/student/quiz/submit")
     public String submitQuiz(
@@ -102,22 +103,22 @@ public class QuizController {
         }
         
         try {
-            // Extract answers from form data
+            
             Map<String, Integer> answers = new java.util.HashMap<>();
             
             for (Map.Entry<String, String> entry : allParams.entrySet()) {
                 if (entry.getKey().startsWith("question_")) {
-                    String questionId = entry.getKey().substring(9); // Remove "question_"
+                    String questionId = entry.getKey().substring(9); 
                     try {
                         int selectedOption = Integer.parseInt(entry.getValue());
                         answers.put(questionId, selectedOption);
                     } catch (NumberFormatException e) {
-                        // Skip invalid values
+                        
                     }
                 }
             }
             
-            // Submit quiz and get result
+            
             QuizAttempt attempt = quizService.submitQuiz(student.getId(), quizId, answers);
             
             redirectAttributes.addFlashAttribute("attemptId", attempt.getId());
@@ -129,13 +130,13 @@ public class QuizController {
         }
     }
 
-    // ==========================================
-    // QUIZ RESULT
-    // ==========================================
+    
+    
+    
     
     @GetMapping("/student/quiz/result/{attemptId}")
     public String quizResult(
-            @PathVariable String attemptId,
+            @PathVariable @NonNull String attemptId,
             HttpSession session,
             Model model,
             RedirectAttributes redirectAttributes) {
@@ -146,7 +147,7 @@ public class QuizController {
             return "redirect:/student-login";
         }
         
-        // Get quiz attempt
+        
         Optional<QuizAttempt> attemptOptional = quizService.getQuizAttemptById(attemptId);
         
         if (attemptOptional.isEmpty()) {
@@ -156,7 +157,7 @@ public class QuizController {
         
         QuizAttempt attempt = attemptOptional.get();
         
-        // Verify this attempt belongs to the student
+        
         if (!attempt.getStudentId().equals(student.getId())) {
             return "redirect:/student/quizzes";
         }
@@ -166,11 +167,11 @@ public class QuizController {
         
         return "quiz-result";
     }
-    // ==========================================
-// FACULTY QUIZ MANAGEMENT
-// ==========================================
+    
 
-// Faculty - View all quizzes
+
+
+
 @GetMapping("/faculty/quizzes")
 public String facultyQuizzes(HttpSession session, Model model) {
     Faculty faculty = (Faculty) session.getAttribute("faculty");
@@ -186,7 +187,7 @@ public String facultyQuizzes(HttpSession session, Model model) {
     return "faculty-quizzes";
 }
 
-// Faculty - Create Quiz Form
+
 @GetMapping("/faculty/quiz/create")
 public String createQuizForm(HttpSession session, Model model) {
     Faculty faculty = (Faculty) session.getAttribute("faculty");
@@ -201,7 +202,7 @@ public String createQuizForm(HttpSession session, Model model) {
     return "faculty-create-quiz";
 }
 
-// Faculty - Save Quiz
+
 @PostMapping("/faculty/quiz/save")
 public String saveQuiz(
         @RequestParam String title,
@@ -220,7 +221,7 @@ public String saveQuiz(
     }
     
     try {
-        // Generate quiz ID
+        
         long count = quizService.getAllActiveQuizzes().size() + 1;
         String quizId = "QUIZ-" + String.format("%03d", count);
         
@@ -251,10 +252,10 @@ public String saveQuiz(
     }
 }
 
-// Faculty - Add Questions Form
+
 @GetMapping("/faculty/quiz/add-questions/{quizId}")
 public String addQuestionsForm(
-        @PathVariable String quizId,
+        @PathVariable @NonNull String quizId,
         HttpSession session,
         Model model,
         RedirectAttributes redirectAttributes) {
@@ -281,10 +282,10 @@ public String addQuestionsForm(
     return "faculty-add-questions";
 }
 
-// Faculty - Save Question
+
 @PostMapping("/faculty/quiz/add-question")
 public String addQuestion(
-        @RequestParam String quizId,
+        @RequestParam @NonNull String quizId,
         @RequestParam String questionText,
         @RequestParam List<String> options,
         @RequestParam int correctOptionIndex,
@@ -300,7 +301,7 @@ public String addQuestion(
     }
     
     try {
-        // Get quiz
+        
         Optional<Quiz> quizOptional = quizService.getQuizById(quizId);
         if (quizOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute("error", "Quiz not found!");
@@ -309,7 +310,7 @@ public String addQuestion(
         
         Quiz quiz = quizOptional.get();
         
-        // Create question
+        
         long questionCount = quizService.getQuestionsForQuiz(quiz.getQuizId()).size() + 1;
         String questionId = "Q-" + String.format("%03d", questionCount);
         
@@ -326,7 +327,7 @@ public String addQuestion(
         
         Question savedQuestion = quizService.saveQuestion(question);
         
-        // Add question ID to quiz
+        
         List<String> questionIds = quiz.getQuestionIds();
         if (questionIds == null) {
             questionIds = new ArrayList<>();
@@ -346,11 +347,11 @@ public String addQuestion(
     return "redirect:/faculty/quiz/add-questions/" + quizId;
 }
 
-// Faculty - Delete Question
+
 @PostMapping("/faculty/quiz/delete-question")
 public String deleteQuestion(
-        @RequestParam String questionId,
-        @RequestParam String quizId,
+        @RequestParam @NonNull String questionId,
+        @RequestParam @NonNull String quizId,
         HttpSession session,
         RedirectAttributes redirectAttributes) {
     
@@ -361,7 +362,7 @@ public String deleteQuestion(
     }
     
     try {
-        // Remove question from quiz
+        
         Optional<Quiz> quizOptional = quizService.getQuizById(quizId);
         if (quizOptional.isPresent()) {
             Quiz quiz = quizOptional.get();
@@ -375,7 +376,7 @@ public String deleteQuestion(
             }
         }
         
-        // Delete question
+        
         quizService.deleteQuestion(questionId);
         
         redirectAttributes.addFlashAttribute("success", "Question deleted successfully!");
@@ -386,10 +387,10 @@ public String deleteQuestion(
     return "redirect:/faculty/quiz/add-questions/" + quizId;
 }
 
-// Faculty - Delete Quiz
+
 @PostMapping("/faculty/quiz/delete")
 public String deleteQuiz(
-        @RequestParam String quizId,
+        @RequestParam @NonNull String quizId,
         HttpSession session,
         RedirectAttributes redirectAttributes) {
     
@@ -400,13 +401,14 @@ public String deleteQuiz(
     }
     
     try {
-        // Delete all questions for this quiz
+        
         List<Question> questions = quizService.getQuestionsForQuiz(quizId);
         for (Question q : questions) {
-            quizService.deleteQuestion(q.getId());
+            quizService.deleteQuestion(java.util.Objects.requireNonNull(
+                    q.getId(), "Saved quiz question must have an ID"));
         }
         
-        // Delete quiz
+        
         quizService.deleteQuiz(quizId);
         
         redirectAttributes.addFlashAttribute("success", "Quiz deleted successfully!");
@@ -417,9 +419,9 @@ public String deleteQuiz(
     return "redirect:/faculty/quizzes";
 }
 
-    // ==========================================
-    // QUIZ ATTEMPTS HISTORY
-    // ==========================================
+    
+    
+    
     
     @GetMapping("/student/quiz/history")
     public String quizHistory(HttpSession session, Model model) {
@@ -429,7 +431,7 @@ public String deleteQuiz(
             return "redirect:/student-login";
         }
         
-        // Get all quiz attempts for this student
+        
         List<QuizAttempt> attempts = quizService.getStudentQuizAttempts(student.getId());
         
         model.addAttribute("student", student);

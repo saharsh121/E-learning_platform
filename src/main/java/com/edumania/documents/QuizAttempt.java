@@ -12,24 +12,24 @@ public class QuizAttempt {
     @Id
     private String id;
     
-    private String studentId;         // Student who took the quiz
-    private String quizId;            // Quiz ID
-    private String courseId;          // Course ID
-    private int score;               // Total marks obtained
-    private int totalMarks;          // Total possible marks
-    private double percentage;       // Score percentage
-    private int correctAnswers;       // Number of correct answers
-    private int wrongAnswers;         // Number of wrong answers
-    private int unanswered;           // Number of unanswered questions
-    private String status;           // Not Started, In Progress, Completed
-    private String result;           // Passed, Failed
-    private int timeTaken;           // Time taken in seconds
-    private List<Map<String, Object>> studentAnswers; // Student's answers
+    private String studentId;         
+    private String quizId;            
+    private String courseId;          
+    private int score;               
+    private int totalMarks;          
+    private double percentage;       
+    private int correctAnswers;       
+    private int wrongAnswers;         
+    private int unanswered;           
+    private String status;           
+    private String result;           
+    private int timeTaken;           
+    private List<Map<String, Object>> studentAnswers; 
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private LocalDateTime submittedAt;
     
-    // Constructors
+    
     public QuizAttempt() {}
     
     public QuizAttempt(String studentId, String quizId, String courseId) {
@@ -40,7 +40,7 @@ public class QuizAttempt {
         this.startTime = LocalDateTime.now();
     }
     
-    // Getters and Setters
+    
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
     

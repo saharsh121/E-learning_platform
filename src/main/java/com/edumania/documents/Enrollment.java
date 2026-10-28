@@ -10,18 +10,18 @@ public class Enrollment {
     @Id
     private String id;
     
-    private String studentId;         // Student ID
-    private String courseId;          // Course ID
+    private String studentId;         
+    private String courseId;          
     private String enrollmentDate;    
-    private String status;            // Enrolled, Completed, Dropped, In Progress
-    private double progress;          // Progress percentage (0-100)
-    private double grade;             // Grade (0-100)
-    private String gradeLetter;       // A, B, C, D, F
+    private String status;            
+    private double progress;          
+    private double grade;             
+    private String gradeLetter;       
     private LocalDateTime enrolledAt;
     private LocalDateTime completedAt;
     private boolean isActive;
     
-    // Constructor
+    
     public Enrollment() {
         this.enrolledAt = LocalDateTime.now();
         this.status = "Enrolled";
@@ -38,7 +38,7 @@ public class Enrollment {
         this.progress = 0;
     }
     
-    // Getters and Setters
+    
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
     

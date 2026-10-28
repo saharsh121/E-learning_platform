@@ -10,21 +10,21 @@ public class Video {
     @Id
     private String id;
     
-    private String courseId;          // Which course this video belongs to
-    private String videoId;           // e.g., PHY-101-VID-01
-    private String title;             // Video title
-    private String description;       // Video description
-    private String videoUrl;          // YouTube URL or hosted video URL
-    private String thumbnailUrl;      // Video thumbnail
-    private int duration;             // Duration in minutes
-    private int orderIndex;           // Order of video in the course
-    private String chapter;           // Chapter name
-    private String instructor;        // Who uploaded
-    private long views;               // Number of views
+    private String courseId;          
+    private String videoId;           
+    private String title;             
+    private String description;       
+    private String videoUrl;          
+    private String thumbnailUrl;      
+    private int duration;             
+    private int orderIndex;           
+    private String chapter;           
+    private String instructor;        
+    private long views;               
     private LocalDateTime uploadDate;
     private boolean isActive;
     
-    // Constructor
+    
     public Video() {
         this.uploadDate = LocalDateTime.now();
         this.isActive = true;
@@ -41,7 +41,7 @@ public class Video {
         this.views = 0;
     }
     
-    // Getters and Setters
+    
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
     

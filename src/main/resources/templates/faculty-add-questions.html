@@ -44,7 +44,7 @@
 
     <div class="container mt-4">
 
-        <!-- Header -->
+        
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h2 style="color: #6D4C2A;"><i class="bi bi-plus-circle"></i> <span th:text="${quiz.title}">Quiz</span></h2>
@@ -60,7 +60,7 @@
             </div>
         </div>
 
-        <!-- Alert Messages -->
+        
         <div th:if="${success}" class="alert alert-success alert-dismissible fade show">
             <span th:text="${success}"></span>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
@@ -70,7 +70,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
 
-        <!-- Add Question Form -->
+        
         <div class="form-card mb-4">
             <h5><i class="bi bi-plus-circle"></i> Add New Question</h5>
             <hr>
@@ -124,7 +124,7 @@
             </form>
         </div>
 
-        <!-- Existing Questions -->
+        
         <h5><i class="bi bi-list-check"></i> Questions (<span th:text="${questions.size()}">0</span>)</h5>
 
         <div th:if="${questions == null or questions.isEmpty()}" class="text-center py-4">
@@ -159,7 +159,7 @@
             </div>
         </div>
 
-        <!-- Quick Actions -->
+        
         <div class="text-center mt-4">
             <a th:href="'/faculty/quiz/add-questions/' + ${quiz.id}" class="btn btn-outline-secondary me-2">
                 <i class="bi bi-arrow-repeat"></i> Refresh

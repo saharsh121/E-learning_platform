@@ -11,21 +11,21 @@ public class Course {
     @Id
     private String id;
     
-    private String courseId;          // e.g., PHY-101, CHEM-101, BIO-101
-    private String courseName;        // e.g., Physics, Chemistry, Biology
-    private String description;       // Course description
-    private String department;        // e.g., Science
-    private String instructor;        // Faculty name
-    private int credits;              // Credit hours
-    private int duration;             // Duration in weeks
-    private String thumbnail;         // Course thumbnail image URL
-    private String status;            // Active, Inactive, Draft
-    private List<String> enrolledStudents;  // List of student IDs
-    private int maxStudents;          // Maximum enrollment capacity
+    private String courseId;          
+    private String courseName;        
+    private String description;       
+    private String department;        
+    private String instructor;        
+    private int credits;              
+    private int duration;             
+    private String thumbnail;         
+    private String status;            
+    private List<String> enrolledStudents;  
+    private int maxStudents;          
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     
-    // Constructor
+    
     public Course() {
         this.createdAt = LocalDateTime.now();
         this.status = "Active";
@@ -40,7 +40,7 @@ public class Course {
         this.status = "Active";
     }
     
-    // Getters and Setters
+    
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
     

@@ -1,15 +1,15 @@
-/**
- * Admin Dashboard - JavaScript
- * EduMania - Admin Portal
- */
+
+
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
     
     console.log('👑 EduMania Admin Dashboard Loaded');
 
-    // ==========================================
-    // 1. SIDEBAR TOGGLE (Mobile)
-    // ==========================================
+    
+    
+    
     
     const sidebar = document.querySelector('.sidebar');
     const headerRight = document.querySelector('.header-right');
@@ -38,9 +38,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // ==========================================
-    // 2. NAVIGATION - Active State
-    // ==========================================
+    
+    
+    
     
     const menuItems = document.querySelectorAll('.sidebar-menu li');
     
@@ -55,9 +55,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ==========================================
-    // 3. STATS ANIMATION
-    // ==========================================
+    
+    
+    
     
     function animateCounters() {
         const statNumbers = document.querySelectorAll('.stat-card h3');
@@ -87,9 +87,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     setTimeout(animateCounters, 500);
 
-    // ==========================================
-    // 4. LOGOUT CONFIRMATION
-    // ==========================================
+    
+    
+    
     
     const logoutBtn = document.querySelector('.logout-btn');
     if (logoutBtn) {
@@ -102,9 +102,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ==========================================
-    // 5. AUTO-DISMISS ALERTS
-    // ==========================================
+    
+    
+    
     
     const alerts = document.querySelectorAll('.alert');
     alerts.forEach(alert => {
@@ -116,9 +116,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     });
 
-    // ==========================================
-    // 6. DELETE CONFIRMATION (for table delete buttons)
-    // ==========================================
+    
+    
+    
     
     document.querySelectorAll('.btn-delete-sm').forEach(btn => {
         btn.addEventListener('click', function(e) {
@@ -133,24 +133,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ==========================================
-    // 7. KEYBOARD SHORTCUTS
-    // ==========================================
+    
+    
+    
     
     document.addEventListener('keydown', function(e) {
-        // Ctrl + D -> Dashboard
+        
         if (e.ctrlKey && e.key === 'd') {
             e.preventDefault();
             window.location.href = '/admin-dashboard';
         }
-        // Ctrl + S -> Add Student
+        
         if (e.ctrlKey && e.key === 's') {
             e.preventDefault();
             document.getElementById('add-student')?.scrollIntoView({
                 behavior: 'smooth'
             });
         }
-        // Ctrl + F -> Add Faculty
+        
         if (e.ctrlKey && e.key === 'f') {
             e.preventDefault();
             document.getElementById('add-faculty')?.scrollIntoView({
@@ -159,9 +159,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // ==========================================
-    // 8. CONSOLE HELPERS
-    // ==========================================
+    
+    
+    
     
     console.log('ℹ️ Type showAdminInfo() to see admin details');
     console.log('💡 Shortcuts: Ctrl+D (Dashboard) | Ctrl+S (Add Student) | Ctrl+F (Add Faculty)');

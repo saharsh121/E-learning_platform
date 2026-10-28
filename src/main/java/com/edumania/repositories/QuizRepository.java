@@ -15,5 +15,5 @@ public interface QuizRepository extends MongoRepository<Quiz, String> {
     
     List<Quiz> findByCourseIdAndIsActiveTrue(String courseId);
     
-    Optional<Quiz> findByQuizId(String quizId);  // ✅ ADDED THIS METHOD
+    Optional<Quiz> findByQuizId(String quizId);  
 }

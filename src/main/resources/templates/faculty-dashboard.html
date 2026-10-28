@@ -6,19 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Faculty Dashboard | EduMania</title>
 
-    <!-- Bootstrap CSS -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Custom CSS -->
+    
     <link rel="stylesheet" href="/css/faculty-dashboard.css">
 
 </head>
 
 <body>
 
-    <!-- ========== SIDEBAR ========== -->
+    
     <div class="sidebar">
         <div class="sidebar-brand">
             <i class="bi bi-mortarboard-fill"></i>
@@ -38,6 +38,10 @@
             <li>
                 <i class="bi bi-file-earmark-text"></i>
                 <a href="#upload-notes">Upload Notes</a>
+            </li>
+            <li>
+                <i class="bi bi-book-half"></i>
+                <a href="#upload-books">Upload Books</a>
             </li>
             <li>
                 <i class="bi bi-question-circle"></i>
@@ -60,10 +64,10 @@
         </div>
     </div>
 
-    <!-- ========== MAIN CONTENT ========== -->
+    
     <div class="main-content">
 
-        <!-- Top Header -->
+        
         <div class="top-header">
             <h4>Faculty Dashboard</h4>
             <div class="header-right">
@@ -71,7 +75,7 @@
             </div>
         </div>
 
-        <!-- Alert Messages -->
+        
         <div th:if="${success}" class="alert alert-success alert-dismissible fade show">
             <i class="bi bi-check-circle-fill"></i> <span th:text="${success}"></span>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
@@ -80,17 +84,20 @@
             <i class="bi bi-exclamation-circle-fill"></i> <span th:text="${error}"></span>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
+        <div th:if="${booksError}" class="alert alert-warning" role="alert">
+            <i class="bi bi-exclamation-triangle"></i> <span th:text="${booksError}"></span>
+        </div>
 
-        <!-- ========================================== -->
-        <!-- ===== SECTION 1: UPLOAD LECTURES ===== -->
-        <!-- ========================================== -->
+        
+        
+        
         
         <div class="section-card" id="upload-lectures">
             <div class="card-header-custom">
                 <h5><i class="bi bi-play-circle"></i> Upload Video Lectures</h5>
             </div>
 
-            <!-- Lecture Upload Form -->
+            
             <div class="upload-form">
                 <form action="/faculty/upload-lecture" method="post">
                     <div class="row g-3">
@@ -128,7 +135,7 @@
                 </form>
             </div>
 
-            <!-- Uploaded Lectures List -->
+            
             <div class="lecture-list">
                 <h6 class="mt-4 mb-3"><i class="bi bi-list-ul"></i> Uploaded Lectures</h6>
 
@@ -166,16 +173,16 @@
             </div>
         </div>
 
-        <!-- ========================================== -->
-        <!-- ===== SECTION 2: UPLOAD NOTES ===== -->
-        <!-- ========================================== -->
+        
+        
+        
         
         <div class="section-card" id="upload-notes">
             <div class="card-header-custom">
                 <h5><i class="bi bi-file-earmark-text"></i> Upload Notes (PDF)</h5>
             </div>
 
-            <!-- Notes Upload Form -->
+            
             <div class="upload-form">
                 <form action="/faculty/upload-note" method="post" enctype="multipart/form-data">
                     <div class="row g-3">
@@ -210,7 +217,7 @@
                 </form>
             </div>
 
-            <!-- Uploaded Notes List -->
+            
             <div class="lecture-list">
                 <h6 class="mt-4 mb-3"><i class="bi bi-list-ul"></i> Uploaded Notes</h6>
 
@@ -248,17 +255,75 @@
             </div>
         </div>
 
+        <div class="section-card" id="upload-books">
+            <div class="card-header-custom">
+                <h5><i class="bi bi-book-half"></i> Upload Books (PDF)</h5>
+            </div>
+
+            <div class="upload-form">
+                <form action="/faculty/upload-book" method="post" enctype="multipart/form-data">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label" for="book-title">Book Title</label>
+                            <input id="book-title" type="text" name="title" class="form-control"
+                                   placeholder="e.g., Introduction to Physics" maxlength="150" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="book-description">Description (optional)</label>
+                            <input id="book-description" type="text" name="description" class="form-control"
+                                   placeholder="A short description" maxlength="1000">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="book-file">PDF File</label>
+                            <input id="book-file" type="file" name="file" class="form-control"
+                                   accept=".pdf,application/pdf" required>
+                            <small class="text-muted">PDF only; maximum file size 10 MB. Books are stored in Cloudinary.</small>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn-upload">
+                                <i class="bi bi-cloud-upload"></i> Upload Book
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="lecture-list">
+                <h6 class="mt-4 mb-3"><i class="bi bi-list-ul"></i> Uploaded Books</h6>
+                <div th:if="${books == null or books.isEmpty()}" class="empty-state">
+                    <i class="bi bi-book"></i>
+                    <p>No books uploaded yet.</p>
+                </div>
+                <div th:each="book : ${books}" class="lecture-item">
+                    <div class="lecture-icon pdf-icon">
+                        <i class="bi bi-file-earmark-pdf"></i>
+                    </div>
+                    <div class="lecture-info">
+                        <h6 th:text="${book.title}">Book Title</h6>
+                        <small>
+                            <span th:if="${!#strings.isEmpty(book.description)}" th:text="${book.description}"></span>
+                            <span th:if="${!#strings.isEmpty(book.uploadedBy)}" th:text="'Uploaded by ' + ${book.uploadedBy}"></span>
+                        </small>
+                    </div>
+                    <a th:href="${book.fileUrl}" class="btn btn-sm btn-outline-success"
+                       aria-label="Download uploaded book">
+                        <i class="bi bi-download"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Footer -->
+    
     <div class="footer">
         © 2026 EduMania - Faculty Dashboard
     </div>
 
-    <!-- Bootstrap JS -->
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Custom JS -->
+    
     <script src="/js/faculty-dashboard.js"></script>
 
 </body>

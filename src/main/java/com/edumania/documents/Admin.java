@@ -10,20 +10,20 @@ public class Admin {
     @Id
     private String id;
     
-    private String adminId;        // Custom admin ID like ADM-2024-001
+    private String adminId;        
     private String firstName;
     private String lastName;
     private String email;
     private String password;
     private String phone;
-    private String role;            // Super Admin, Admin, Manager
+    private String role;            
     private String department;
     private LocalDateTime joinDate;
     private LocalDateTime lastLogin;
     private boolean isActive;
     private boolean isSuperAdmin;
     
-    // Constructors
+    
     public Admin() {}
     
     public Admin(String firstName, String lastName, String email, String password) {
@@ -36,7 +36,7 @@ public class Admin {
         this.joinDate = LocalDateTime.now();
     }
     
-    // Getters and Setters
+    
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
     

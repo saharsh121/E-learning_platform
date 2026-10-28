@@ -1,20 +1,20 @@
-/**
- * Faculty Dashboard - JavaScript
- * EduMania - Faculty Portal
- */
+
+
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
     
     console.log('👨‍🏫 EduMania Faculty Dashboard Loaded');
 
-    // ==========================================
-    // 1. SIDEBAR TOGGLE (Mobile)
-    // ==========================================
+    
+    
+    
     
     const sidebar = document.querySelector('.sidebar');
     const headerRight = document.querySelector('.header-right');
     
-    // Create hamburger menu button
+    
     const menuToggle = document.createElement('button');
     menuToggle.className = 'menu-toggle d-md-none';
     menuToggle.innerHTML = '<i class="bi bi-list"></i>';
@@ -23,13 +23,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const topHeader = document.querySelector('.top-header');
     topHeader.insertBefore(menuToggle, headerRight);
 
-    // Toggle sidebar on mobile
+    
     menuToggle.addEventListener('click', function(e) {
         e.stopPropagation();
         sidebar.classList.toggle('active');
     });
 
-    // Close sidebar when clicking outside (on mobile)
+    
     document.addEventListener('click', function(e) {
         if (window.innerWidth <= 768) {
             if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Close sidebar on link click (mobile)
+    
     document.querySelectorAll('.sidebar-menu li a').forEach(link => {
         link.addEventListener('click', function() {
             if (window.innerWidth <= 768) {
@@ -47,9 +47,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ==========================================
-    // 2. NAVIGATION - Active State
-    // ==========================================
+    
+    
+    
     
     const menuItems = document.querySelectorAll('.sidebar-menu li');
     
@@ -64,9 +64,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ==========================================
-    // 3. LOGOUT CONFIRMATION
-    // ==========================================
+    
+    
+    
     
     const logoutBtn = document.querySelector('.logout-btn');
     if (logoutBtn) {
@@ -79,11 +79,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ==========================================
-    // 4. FORM VALIDATION
-    // ==========================================
     
-    // Lecture Upload Form Validation
+    
+    
+    
+    
     const lectureForm = document.querySelector('form[action="/faculty/upload-lecture"]');
     if (lectureForm) {
         lectureForm.addEventListener('submit', function(e) {
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Note Upload Form Validation
+    
     const noteForm = document.querySelector('form[action="/faculty/upload-note"]');
     if (noteForm) {
         noteForm.addEventListener('submit', function(e) {
@@ -152,9 +152,38 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ==========================================
-    // 5. DELETE CONFIRMATION
-    // ==========================================
+    const bookForm = document.querySelector('form[action="/faculty/upload-book"]');
+    if (bookForm) {
+        bookForm.addEventListener('submit', function(e) {
+            const title = this.querySelector('input[name="title"]').value.trim();
+            const file = this.querySelector('input[name="file"]');
+            const errors = [];
+
+            if (!title) {
+                errors.push('Please enter a book title');
+            }
+            if (!file || !file.files || file.files.length === 0) {
+                errors.push('Please select a PDF file to upload');
+            } else {
+                const selectedFile = file.files[0];
+                if (!selectedFile.name.toLowerCase().endsWith('.pdf')) {
+                    errors.push('Only PDF files are allowed');
+                }
+                if (selectedFile.size > 10 * 1024 * 1024) {
+                    errors.push('File size must be 10MB or smaller');
+                }
+            }
+
+            if (errors.length > 0) {
+                e.preventDefault();
+                alert('Please fix the following:\n\n- ' + errors.join('\n- '));
+            }
+        });
+    }
+
+    
+    
+    
     
     document.querySelectorAll('.btn-delete').forEach(btn => {
         btn.addEventListener('click', function(e) {
@@ -169,9 +198,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ==========================================
-    // 6. VIEW LECTURE (Open in New Tab)
-    // ==========================================
+    
+    
+    
     
     document.querySelectorAll('.btn-outline-primary').forEach(btn => {
         btn.addEventListener('click', function(e) {
@@ -183,9 +212,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ==========================================
-    // 7. AUTO-DISMISS ALERTS
-    // ==========================================
+    
+    
+    
     
     const alerts = document.querySelectorAll('.alert');
     alerts.forEach(alert => {
@@ -197,24 +226,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     });
 
-    // ==========================================
-    // 8. KEYBOARD SHORTCUTS
-    // ==========================================
+    
+    
+    
     
     document.addEventListener('keydown', function(e) {
-        // Ctrl + D -> Dashboard
+        
         if (e.ctrlKey && e.key === 'd') {
             e.preventDefault();
             window.location.href = '/faculty-dashboard';
         }
-        // Ctrl + U -> Upload Lectures
+        
         if (e.ctrlKey && e.key === 'u') {
             e.preventDefault();
             document.getElementById('upload-lectures')?.scrollIntoView({
                 behavior: 'smooth'
             });
         }
-        // Ctrl + N -> Upload Notes
+        
         if (e.ctrlKey && e.key === 'n') {
             e.preventDefault();
             document.getElementById('upload-notes')?.scrollIntoView({
@@ -223,9 +252,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // ==========================================
-    // 9. CONSOLE HELPERS
-    // ==========================================
+    
+    
+    
     
     console.log('ℹ️ Type showFacultyInfo() to see faculty details');
     console.log('💡 Shortcuts: Ctrl+D (Dashboard) | Ctrl+U (Upload Lectures) | Ctrl+N (Upload Notes)');
@@ -240,9 +269,9 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(`📄 Total Notes: ${notesCount}`);
     };
 
-    // ==========================================
-    // 10. FILE NAME DISPLAY (for note upload)
-    // ==========================================
+    
+    
+    
     
     const fileInput = document.querySelector('input[type="file"][name="file"]');
     if (fileInput) {
@@ -254,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const sizeDisplay = fileSize > 1024 * 1024 ? sizeInMB + ' MB' : sizeInKB + ' KB';
             
-            // Show file info
+            
             let infoElement = document.querySelector('.file-info');
             if (!infoElement) {
                 infoElement = document.createElement('small');
@@ -263,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             infoElement.textContent = `📎 Selected: ${fileName} (${sizeDisplay})`;
             
-            // Validate file type
+            
             if (fileName && !fileName.toLowerCase().endsWith('.pdf')) {
                 infoElement.style.color = '#dc3545';
                 infoElement.textContent = '⚠️ Only PDF files are allowed!';

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz Management | Faculty</title>
 
-    <!-- Bootstrap CSS -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -43,7 +43,7 @@
 
 <body>
 
-    <!-- Navbar -->
+    
     <nav class="navbar">
         <div class="container">
             <a href="/faculty-dashboard" class="navbar-brand">
@@ -70,7 +70,7 @@
             </div>
         </div>
 
-        <!-- Alert Messages -->
+        
         <div th:if="${success}" class="alert alert-success alert-dismissible fade show">
             <span th:text="${success}"></span>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
@@ -80,7 +80,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
 
-        <!-- Quiz List -->
+        
         <div th:if="${quizzes == null or quizzes.isEmpty()}" class="empty-state">
             <i class="bi bi-question-circle"></i>
             <h4>No Quizzes</h4>
