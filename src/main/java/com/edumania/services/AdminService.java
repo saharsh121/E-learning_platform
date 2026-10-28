@@ -3,7 +3,6 @@ package com.edumania.services;
 import com.edumania.documents.Admin;
 import com.edumania.repositories.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,7 +14,7 @@ public class AdminService {
     @Autowired
     private AdminRepository adminRepository;
     
-    
+    // Register new admin
     public Admin registerAdmin(Admin admin) {
         if (adminRepository.findByEmail(admin.getEmail()).isPresent()) {
             throw new RuntimeException("Email already registered!");
@@ -25,7 +24,7 @@ public class AdminService {
         return adminRepository.save(admin);
     }
     
-    
+    // Login admin
     public Admin loginAdmin(String email, String password) {
     Optional<Admin> adminOptional = adminRepository.findByEmail(email);
     
@@ -40,28 +39,28 @@ public class AdminService {
     return null;
 }
     
-    
+    // Get all admins
     public List<Admin> getAllAdmins() {
         return adminRepository.findAll();
     }
     
-    
-    public Optional<Admin> getAdminById(@NonNull String id) {
+    // Get admin by ID
+    public Optional<Admin> getAdminById(String id) {
         return adminRepository.findById(id);
     }
     
-    
+    // Get admin by email
     public Optional<Admin> getAdminByEmail(String email) {
         return adminRepository.findByEmail(email);
     }
     
-    
-    public Admin updateAdmin(@NonNull Admin admin) {
+    // Update admin
+    public Admin updateAdmin(Admin admin) {
         return adminRepository.save(admin);
     }
     
-    
-    public void deleteAdmin(@NonNull String id) {
+    // Delete admin
+    public void deleteAdmin(String id) {
         adminRepository.deleteById(id);
     }
 }

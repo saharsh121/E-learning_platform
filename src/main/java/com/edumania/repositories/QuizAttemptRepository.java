@@ -19,6 +19,6 @@ public interface QuizAttemptRepository extends MongoRepository<QuizAttempt, Stri
     
     List<QuizAttempt> findByStudentIdAndStatus(String studentId, String status);
     
-    
-    
+    // ✅ This method already exists (inherited from MongoRepository)
+    // Optional<QuizAttempt> findById(String id);
 }

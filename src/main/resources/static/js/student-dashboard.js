@@ -1,19 +1,19 @@
-
-
-
-
+/**
+ * Student Dashboard - JavaScript
+ * EduMania Learning Platform
+ */
 
 document.addEventListener('DOMContentLoaded', function() {
     
     console.log('🎓 EduMania Student Dashboard Loaded');
 
-    
-    
-    
+    // ==========================================
+    // 1. SIDEBAR TOGGLE (for mobile)
+    // ==========================================
     
     const sidebar = document.querySelector('.sidebar');
     
-    
+    // Create hamburger menu button
     const headerRight = document.querySelector('.header-right');
     const menuToggle = document.createElement('button');
     menuToggle.className = 'menu-toggle btn btn-outline-secondary d-md-none';
@@ -27,13 +27,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const topHeader = document.querySelector('.top-header');
     topHeader.insertBefore(menuToggle, headerRight);
 
-    
+    // Toggle sidebar on mobile
     menuToggle.addEventListener('click', function(e) {
         e.stopPropagation();
         sidebar.classList.toggle('active');
     });
 
-    
+    // Close sidebar when clicking outside
     document.addEventListener('click', function(e) {
         if (window.innerWidth <= 768) {
             if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
@@ -42,9 +42,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    
-    
-    
+    // ==========================================
+    // 2. NAVIGATION - Active State & Smooth Scroll
+    // ==========================================
     
     const menuItems = document.querySelectorAll('.sidebar-menu li');
     
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 sidebar.classList.remove('active');
             }
             
-            
+            // Smooth scroll to section
             const link = this.querySelector('a');
             if (link && link.getAttribute('href') && link.getAttribute('href').startsWith('#')) {
                 const targetId = link.getAttribute('href');
@@ -72,9 +72,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    
-    
-    
+    // ==========================================
+    // 3. STATS ANIMATION
+    // ==========================================
     
     function animateCounters() {
         const statNumbers = document.querySelectorAll('.stat-card h3');
@@ -104,9 +104,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     setTimeout(animateCounters, 500);
 
-    
-    
-    
+    // ==========================================
+    // 4. COURSE ENROLLMENT CONFIRMATION
+    // ==========================================
     
     const enrollForms = document.querySelectorAll('form[action="/student/enroll"]');
     
@@ -119,9 +119,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    
-    
-    
+    // ==========================================
+    // 5. NOTIFICATION BELL
+    // ==========================================
     
     const notificationBell = document.querySelector('.notification');
     if (notificationBell) {
@@ -130,23 +130,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    
-    
-    
+    // ==========================================
+    // 6. VIEW COURSE BUTTONS
+    // ==========================================
     
     const viewCourseBtns = document.querySelectorAll('.course-card .btn-primary');
     
     viewCourseBtns.forEach(btn => {
         btn.addEventListener('click', function(e) {
-            
+            // Let the link do its job - just a small animation
             this.innerHTML = '<i class="bi bi-hourglass-split"></i> Loading...';
             this.classList.add('disabled');
         });
     });
 
-    
-    
-    
+    // ==========================================
+    // 7. LOGOUT CONFIRMATION
+    // ==========================================
     
     const logoutBtn = document.querySelector('.logout-btn');
     if (logoutBtn) {
@@ -159,24 +159,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    
-    
-    
+    // ==========================================
+    // 8. KEYBOARD SHORTCUTS
+    // ==========================================
     
     document.addEventListener('keydown', function(e) {
-        
+        // Ctrl + D -> Dashboard
         if (e.ctrlKey && e.key === 'd') {
             e.preventDefault();
             window.location.href = '/student-dashboard';
         }
-        
+        // Ctrl + C -> Courses
         if (e.ctrlKey && e.key === 'c') {
             e.preventDefault();
             document.getElementById('enrolled-courses')?.scrollIntoView({
                 behavior: 'smooth'
             });
         }
-        
+        // Ctrl + A -> Available Courses
         if (e.ctrlKey && e.key === 'a') {
             e.preventDefault();
             document.getElementById('available-courses')?.scrollIntoView({
@@ -185,9 +185,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    
-    
-    
+    // ==========================================
+    // 9. CONSOLE HELPERS
+    // ==========================================
     
     console.log('ℹ️ Type showStudentInfo() to see student details');
     
@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(`✅ Total Achievements: 2`);
     };
 
-    
+    // Auto-execute on load
     setTimeout(() => {
         console.log('✅ Dashboard ready!');
         console.log('💡 Tip: Type showStudentInfo() for student details');

@@ -11,7 +11,7 @@ public class Student {
     @Id
     private String id;
     
-    private String studentId;      
+    private String studentId;      // Custom student ID like STU-2024-001
     private String firstName;
     private String lastName;
     private String email;
@@ -27,7 +27,7 @@ public class Student {
     private LocalDateTime lastLogin;
     private boolean isActive;
     
-    
+    // Constructors
     public Student() {}
     
     public Student(String firstName, String lastName, String email, String password) {
@@ -39,7 +39,7 @@ public class Student {
         this.enrollmentDate = LocalDateTime.now();
     }
     
-    
+    // Getters and Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
     

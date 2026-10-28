@@ -11,22 +11,22 @@ public class Faculty {
     @Id
     private String id;
     
-    private String facultyId;      
+    private String facultyId;      // Custom faculty ID like FAC-2024-001
     private String firstName;
     private String lastName;
     private String email;
     private String password;
     private String phone;
     private String department;
-    private String designation;     
+    private String designation;     // Professor, Associate Professor, Assistant Professor
     private String specialization;
     private List<String> coursesTeaching;
-    private double experience;      
+    private double experience;      // Years of experience
     private LocalDateTime joinDate;
     private LocalDateTime lastLogin;
     private boolean isActive;
     
-    
+    // Constructors
     public Faculty() {}
     
     public Faculty(String firstName, String lastName, String email, String password) {
@@ -38,7 +38,7 @@ public class Faculty {
         this.joinDate = LocalDateTime.now();
     }
     
-    
+    // Getters and Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
     

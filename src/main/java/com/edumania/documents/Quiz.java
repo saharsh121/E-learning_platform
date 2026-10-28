@@ -11,28 +11,28 @@ public class Quiz {
     @Id
     private String id;
     
-    private String quizId;           
-    private String courseId;         
-    private String title;            
-    private String description;      
-    private int duration;            
-    private int totalQuestions;      
-    private int passingScore;        
-    private String difficulty;       
+    private String quizId;           // e.g., QUIZ-001
+    private String courseId;         // PHY-101, CHEM-101, BIO-101
+    private String title;            // "Physics Quiz 1"
+    private String description;      // "Test your knowledge on Mechanics"
+    private int duration;            // Duration in minutes
+    private int totalQuestions;      // Total number of questions
+    private int passingScore;        // Minimum score to pass (percentage)
+    private String difficulty;       // Easy, Medium, Hard
     private boolean isActive;
-    private LocalDateTime startDate; 
-    private LocalDateTime endDate;   
+    private LocalDateTime startDate; // Quiz available from
+    private LocalDateTime endDate;   // Quiz available until
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private List<String> questionIds; 
+    private List<String> questionIds; // List of question IDs
     
-    
+    // Constructors
     public Quiz() {
         this.createdAt = LocalDateTime.now();
         this.isActive = true;
     }
     
-    
+    // Getters and Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
     

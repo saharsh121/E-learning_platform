@@ -10,20 +10,20 @@ public class Question {
     @Id
     private String id;
     
-    private String questionId;        
-    private String quizId;            
-    private String questionText;      
-    private List<String> options;     
-    private int correctOptionIndex;   
-    private int marks;               
-    private String explanation;       
-    private String difficulty;        
-    private String category;          
+    private String questionId;        // e.g., Q-001
+    private String quizId;            // Which quiz this belongs to
+    private String questionText;      // The actual question
+    private List<String> options;     // A, B, C, D options
+    private int correctOptionIndex;   // Index of correct option (0, 1, 2, 3)
+    private int marks;               // Marks for this question
+    private String explanation;       // Explanation for the answer
+    private String difficulty;        // Easy, Medium, Hard
+    private String category;          // MCQ, True/False
     
-    
+    // Constructors
     public Question() {}
     
-    
+    // Getters and Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
     

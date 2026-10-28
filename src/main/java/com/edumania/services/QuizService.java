@@ -7,7 +7,6 @@ import com.edumania.repositories.QuizRepository;
 import com.edumania.repositories.QuestionRepository;
 import com.edumania.repositories.QuizAttemptRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -24,32 +23,32 @@ public class QuizService {
     @Autowired
     private QuizAttemptRepository quizAttemptRepository;
 
-    
+    // Get all active quizzes
     public List<Quiz> getAllActiveQuizzes() {
         return quizRepository.findByIsActiveTrue();
     }
 
-    
+    // Get quizzes by course ID
     public List<Quiz> getQuizzesByCourseId(String courseId) {
         return quizRepository.findByCourseIdAndIsActiveTrue(courseId);
     }
 
-    
-    public Optional<Quiz> getQuizById(@NonNull String id) {
+    // Get quiz by ID
+    public Optional<Quiz> getQuizById(String id) {
         return quizRepository.findById(id);
     }
 
-    
+    // Get quiz by quizId (QUIZ-001)
     public Optional<Quiz> getQuizByQuizId(String quizId) {
         return quizRepository.findByQuizId(quizId);
     }
 
-    
+    // Get questions for a quiz
     public List<Question> getQuestionsForQuiz(String quizId) {
         return questionRepository.findByQuizId(quizId);
     }
 
-    
+    // Get quiz with questions
     public Map<String, Object> getQuizWithQuestions(String quizId) {
         Map<String, Object> result = new HashMap<>();
         
@@ -61,10 +60,10 @@ public class QuizService {
         Quiz quiz = quizOptional.get();
         List<Question> questions = questionRepository.findByQuizId(quizId);
         
-        
+        // Shuffle questions for randomness
         Collections.shuffle(questions);
         
-        
+        // Remove correct answers for student view
         List<Map<String, Object>> questionData = new ArrayList<>();
         for (Question q : questions) {
             Map<String, Object> qMap = new HashMap<>();
@@ -73,7 +72,7 @@ public class QuizService {
             qMap.put("questionText", q.getQuestionText());
             qMap.put("options", q.getOptions());
             qMap.put("marks", q.getMarks());
-            
+            // Don't send correctOptionIndex to student
             questionData.add(qMap);
         }
         
@@ -83,9 +82,9 @@ public class QuizService {
         return result;
     }
 
-    
+    // Submit quiz and calculate score
     public QuizAttempt submitQuiz(String studentId, String quizId, Map<String, Integer> answers) {
-        
+        // Get quiz
         Optional<Quiz> quizOptional = quizRepository.findByQuizId(quizId);
         if (quizOptional.isEmpty()) {
             throw new RuntimeException("Quiz not found!");
@@ -93,7 +92,7 @@ public class QuizService {
         
         Quiz quiz = quizOptional.get();
         
-        
+        // Get all questions
         List<Question> questions = questionRepository.findByQuizId(quizId);
         
         int totalMarks = 0;
@@ -134,13 +133,13 @@ public class QuizService {
             studentAnswers.add(answerMap);
         }
         
-        
+        // Calculate percentage
         double percentage = totalMarks > 0 ? (double) obtainedMarks / totalMarks * 100 : 0;
         
-        
+        // Determine result
         String result = percentage >= quiz.getPassingScore() ? "Passed" : "Failed";
         
-        
+        // Create quiz attempt record
         QuizAttempt attempt = new QuizAttempt();
         attempt.setStudentId(studentId);
         attempt.setQuizId(quizId);
@@ -159,59 +158,58 @@ public class QuizService {
         return quizAttemptRepository.save(attempt);
     }
 
-    
+    // Get student's quiz attempts
     public List<QuizAttempt> getStudentQuizAttempts(String studentId) {
         return quizAttemptRepository.findByStudentId(studentId);
     }
 
-    
+    // Get student's quiz attempts for a course
     public List<QuizAttempt> getStudentQuizAttemptsByCourse(String studentId, String courseId) {
         return quizAttemptRepository.findByStudentIdAndCourseId(studentId, courseId);
     }
 
-    
+    // Get student's attempt for a specific quiz
     public Optional<QuizAttempt> getStudentQuizAttempt(String studentId, String quizId) {
         return quizAttemptRepository.findByStudentIdAndQuizId(studentId, quizId);
     }
 
-    
+    // Check if student has already attempted a quiz
     public boolean hasAttemptedQuiz(String studentId, String quizId) {
         return quizAttemptRepository.findByStudentIdAndQuizId(studentId, quizId).isPresent();
     }
-    
-public Quiz saveQuiz(@NonNull Quiz quiz) {
+    // Save quiz
+public Quiz saveQuiz(Quiz quiz) {
     return quizRepository.save(quiz);
 }
 
-
-public Quiz updateQuiz(@NonNull Quiz quiz) {
+// Update quiz
+public Quiz updateQuiz(Quiz quiz) {
     quiz.setUpdatedAt(LocalDateTime.now());
     return quizRepository.save(quiz);
 }
 
-
-public Question saveQuestion(@NonNull Question question) {
+// Save question
+public Question saveQuestion(Question question) {
     return questionRepository.save(question);
 }
 
-
-public void deleteQuestion(@NonNull String questionId) {
+// Delete question
+public void deleteQuestion(String questionId) {
     questionRepository.deleteById(questionId);
 }
 
-
+// Delete quiz
 public void deleteQuiz(String quizId) {
     Optional<Quiz> quizOptional = quizRepository.findByQuizId(quizId);
-    quizOptional.ifPresent(quiz -> quizRepository.delete(
-            java.util.Objects.requireNonNull(quiz, "Quiz repository returned a null quiz")));
+    quizOptional.ifPresent(quiz -> quizRepository.delete(quiz));
 }
 
 
+    // ==========================================
+    // ✅ ADD THIS METHOD - Get quiz attempt by ID
+    // ==========================================
     
-    
-    
-    
-    public Optional<QuizAttempt> getQuizAttemptById(@NonNull String attemptId) {
+    public Optional<QuizAttempt> getQuizAttemptById(String attemptId) {
         return quizAttemptRepository.findById(attemptId);
     }
 }

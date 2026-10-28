@@ -1,5 +1,6 @@
 package com.edumania.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,33 +16,25 @@ import com.edumania.services.AdminService;
 import com.edumania.services.CourseService;
 import com.edumania.services.VideoService;
 import com.edumania.services.NoteService;
-import com.edumania.services.CloudinaryBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.ContentDisposition;
-import org.springframework.lang.NonNull;
-import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.servlet.http.HttpSession;
 import java.io.File;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.nio.file.Path;
+import java.net.MalformedURLException;
+import java.io.IOException;
 
 @Controller
 public class PageController {
-
-    private static final Logger logger = LoggerFactory.getLogger(PageController.class);
 
     @Autowired
     private StudentService studentService;
@@ -61,21 +54,18 @@ public class PageController {
     @Autowired
     private NoteService noteService;
 
-    @Autowired
-    private CloudinaryBookService cloudinaryBookService;
-
-    
-    
-    
+    // ==========================================
+    // HOME PAGE
+    // ==========================================
     
     @GetMapping("/")
     public String index() {
         return "index";
     }
 
-    
-    
-    
+    // ==========================================
+    // LOGIN PAGES
+    // ==========================================
     
     @GetMapping("/admin-login")
     public String adminLogin() {
@@ -92,9 +82,9 @@ public class PageController {
         return "student-login";
     }
 
-    
-    
-    
+    // ==========================================
+    // STUDENT LOGIN - VERIFY FROM DATABASE
+    // ==========================================
     
     @PostMapping("/student/login")
     public String studentLogin(
@@ -120,9 +110,9 @@ public class PageController {
         }
     }
 
-    
-    
-    
+    // ==========================================
+    // FACULTY LOGIN - VERIFY FROM DATABASE
+    // ==========================================
     
     @PostMapping("/faculty/login")
     public String facultyLogin(
@@ -148,9 +138,9 @@ public class PageController {
         }
     }
 
-    
-    
-    
+    // ==========================================
+    // ADMIN LOGIN - VERIFY FROM DATABASE
+    // ==========================================
     
     @PostMapping("/admin/login")
     public String adminLogin(
@@ -176,9 +166,9 @@ public class PageController {
         }
     }
 
-    
-    
-    
+    // ==========================================
+    // STUDENT DASHBOARD - WITH COURSES
+    // ==========================================
     
     @GetMapping("/student-dashboard")
     public String studentDashboard(HttpSession session, Model model) {
@@ -188,7 +178,7 @@ public class PageController {
             return "redirect:/student-login";
         }
         
-        
+        // Get available and enrolled courses
         List<Course> availableCourses = courseService.getAvailableCourses(student.getId());
         List<Course> enrolledCourses = courseService.getStudentEnrolledCourses(student.getId());
         
@@ -199,9 +189,9 @@ public class PageController {
         return "student-dashboard";
     }
 
-    
-    
-    
+    // ==========================================
+    // RESOURCES PAGE - VIEW ALL PDFs
+    // ==========================================
     
     @GetMapping("/resources")
     public String viewResources(HttpSession session, Model model) {
@@ -211,7 +201,7 @@ public class PageController {
             return "redirect:/student-login";
         }
         
-        
+        // Get all active notes/resources from database
         List<Note> resources = noteService.getActiveNotes();
         
         model.addAttribute("student", student);
@@ -220,98 +210,13 @@ public class PageController {
         return "resources";
     }
 
-    @GetMapping("/books")
-    public String viewBooks(HttpSession session, Model model) {
-        Student student = (Student) session.getAttribute("student");
-        if (student == null) {
-            return "redirect:/student-login";
-        }
-
-        model.addAttribute("student", student);
-        try {
-            model.addAttribute("books", cloudinaryBookService.getBooks());
-        } catch (Exception e) {
-            logger.error("Unable to load books from Cloudinary", e);
-            model.addAttribute("books", List.of());
-            model.addAttribute("error", "Books could not be loaded. Please try again later.");
-        }
-
-        return "books";
-    }
-
-    @GetMapping("/books/download")
-    public ResponseEntity<StreamingResponseBody> downloadBook(
-            @RequestParam String publicId,
-            HttpSession session) {
-        if (session.getAttribute("student") == null && session.getAttribute("faculty") == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-
-        HttpURLConnection connection = null;
-        try {
-            CloudinaryBookService.BookDownload download = cloudinaryBookService.getBookDownload(publicId);
-            connection = (HttpURLConnection) URI.create(download.url()).toURL().openConnection();
-            connection.setConnectTimeout(10_000);
-            connection.setReadTimeout(30_000);
-            connection.setInstanceFollowRedirects(true);
-            connection.connect();
-
-            int status = connection.getResponseCode();
-            if (status != HttpURLConnection.HTTP_OK) {
-                String cloudinaryError = connection.getHeaderField("X-Cld-Error");
-                logger.error("Cloudinary book download failed with HTTP {}: {}",
-                        status,
-                        cloudinaryError == null ? "no Cloudinary error detail provided" : cloudinaryError);
-                connection.disconnect();
-                if (status == HttpURLConnection.HTTP_NOT_FOUND) {
-                    return ResponseEntity.notFound().build();
-                }
-                return ResponseEntity.status(HttpStatus.BAD_GATEWAY).build();
-            }
-
-            HttpURLConnection downloadConnection = connection;
-            StreamingResponseBody responseBody = outputStream -> {
-                try (InputStream inputStream = downloadConnection.getInputStream()) {
-                    inputStream.transferTo(outputStream);
-                } finally {
-                    downloadConnection.disconnect();
-                }
-            };
-
-            ResponseEntity.BodyBuilder response = ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_TYPE, "application/pdf")
-                    .header(
-                            HttpHeaders.CONTENT_DISPOSITION,
-                            ContentDisposition.attachment()
-                                    .filename(download.filename(), StandardCharsets.UTF_8)
-                                    .build()
-                                    .toString());
-            long contentLength = connection.getContentLengthLong();
-            if (contentLength >= 0) {
-                response.contentLength(contentLength);
-            }
-            return response.body(responseBody);
-        } catch (IllegalArgumentException e) {
-            if (connection != null) {
-                connection.disconnect();
-            }
-            return ResponseEntity.badRequest().build();
-        } catch (Exception e) {
-            if (connection != null) {
-                connection.disconnect();
-            }
-            logger.error("Unable to download book from Cloudinary", e);
-            return ResponseEntity.status(HttpStatus.BAD_GATEWAY).build();
-        }
-    }
-
-    
-    
-    
+    // ==========================================
+    // ENROLL IN COURSE
+    // ==========================================
     
     @PostMapping("/student/enroll")
     public String enrollStudent(
-            @RequestParam @NonNull String courseId,
+            @RequestParam String courseId,
             HttpSession session,
             RedirectAttributes redirectAttributes) {
         
@@ -331,13 +236,13 @@ public class PageController {
         return "redirect:/student-dashboard";
     }
 
-    
-    
-    
+    // ==========================================
+    // UNENROLL FROM COURSE
+    // ==========================================
     
     @PostMapping("/student/unenroll")
     public String unenrollStudent(
-            @RequestParam @NonNull String courseId,
+            @RequestParam String courseId,
             HttpSession session,
             RedirectAttributes redirectAttributes) {
         
@@ -357,9 +262,9 @@ public class PageController {
         return "redirect:/student-dashboard";
     }
 
-    
-    
-    
+    // ==========================================
+    // COURSE DETAIL PAGE
+    // ==========================================
     
     @GetMapping("/course/{courseId}")
     public String courseDetail(
@@ -387,7 +292,7 @@ public class PageController {
             return "redirect:/student-dashboard";
         }
         
-        
+        // Get videos and notes for this course
         List<Video> videos = videoService.getActiveVideosByCourseId(course.getId());
         List<Note> notes = noteService.getActiveNotesByCourseId(course.getId());
         
@@ -399,9 +304,9 @@ public class PageController {
         return "course-detail";
     }
 
-    
-
-
+    // ==========================================
+// COURSE PAGES - Physics, Chemistry, Biology
+// ==========================================
 
 @GetMapping("/course/physics")
 public String physicsCourse(HttpSession session, Model model) {
@@ -411,11 +316,11 @@ public String physicsCourse(HttpSession session, Model model) {
         return "redirect:/student-login";
     }
     
-    
+    // Get videos directly by courseId (PHY-101)
     List<Video> videos = videoService.getVideosByCourseId("PHY-101");
     System.out.println("✅ Physics Videos found: " + videos.size());
     
-    
+    // Debug: Print each video
     for (Video video : videos) {
         System.out.println("📹 Video Title: " + video.getTitle());
         System.out.println("📹 Video URL: " + video.getVideoUrl());
@@ -436,7 +341,7 @@ public String chemistryCourse(HttpSession session, Model model) {
         return "redirect:/student-login";
     }
     
-    
+    // Get videos directly by courseId (CHEM-101)
     List<Video> videos = videoService.getVideosByCourseId("CHEM-101");
     System.out.println("✅ Chemistry Videos found: " + videos.size());
     
@@ -459,7 +364,7 @@ public String biologyCourse(HttpSession session, Model model) {
         return "redirect:/student-login";
     }
     
-    
+    // Get videos directly by courseId (BIO-101)
     List<Video> videos = videoService.getVideosByCourseId("BIO-101");
     System.out.println("✅ Biology Videos found: " + videos.size());
     
@@ -473,13 +378,13 @@ public String biologyCourse(HttpSession session, Model model) {
     
     return "biology";
 }
-    
-    
-    
+    // ==========================================
+    // DOWNLOAD NOTE - ACTUAL FILE DOWNLOAD
+    // ==========================================
 
     @GetMapping("/notes/download/{noteId}")
     public ResponseEntity<Resource> downloadNote(
-            @PathVariable @NonNull String noteId,
+            @PathVariable String noteId,
             HttpSession session) {
         
         Student student = (Student) session.getAttribute("student");
@@ -488,43 +393,51 @@ public String biologyCourse(HttpSession session, Model model) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         
-        Optional<Note> noteOptional = noteService.getNoteById(noteId);
-        
-        if (noteOptional.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        
-        Note note = noteOptional.get();
-        
-        noteService.incrementDownloads(noteId);
-        
-        String filePath = "src/main/resources/static" + note.getFileUrl();
-        File file = new File(filePath);
-        
-        if (!file.exists()) {
-            String fileName = note.getFileUrl().substring(note.getFileUrl().lastIndexOf("/") + 1);
-            filePath = "src/main/resources/static/uploads/notes/" + fileName;
-            file = new File(filePath);
-        }
-        
-        if (!file.exists()) {
-            System.out.println("❌ File not found: " + filePath);
-            return ResponseEntity.notFound().build();
-        }
-        
-        Resource resource = new FileSystemResource(filePath);
-        
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_TYPE, "application/pdf")
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + note.getTitle() + ".pdf\"")
-                .body(resource);
+        try {
+            Optional<Note> noteOptional = noteService.getNoteById(noteId);
+            
+            if (noteOptional.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+            
+            Note note = noteOptional.get();
+            
+            noteService.incrementDownloads(noteId);
+            
+            String filePath = "src/main/resources/static" + note.getFileUrl();
+            File file = new File(filePath);
+            
+            if (!file.exists()) {
+                String fileName = note.getFileUrl().substring(note.getFileUrl().lastIndexOf("/") + 1);
+                filePath = "src/main/resources/static/uploads/notes/" + fileName;
+                file = new File(filePath);
+            }
+            
+            if (!file.exists()) {
+                System.out.println("❌ File not found: " + filePath);
+                return ResponseEntity.notFound().build();
+            }
+            
+            Path path = file.toPath();
+            Resource resource = new UrlResource(path.toUri());
+            
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + note.getTitle() + ".pdf\"")
+                    .body(resource);
+            
+        } catch (MalformedURLException e) {
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+} catch (IOException e) {
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+}
     }
 
 
 
-    
-    
-    
+    // ==========================================
+    // LOGOUT
+    // ==========================================
     
     @GetMapping("/logout")
     public String logout(HttpSession session) {
@@ -532,9 +445,9 @@ public String biologyCourse(HttpSession session, Model model) {
         return "redirect:/";
     }
 
-    
-    
-    
+    // ==========================================
+    // STUDENT REGISTRATION
+    // ==========================================
     
     @GetMapping("/student-register")
     public String studentRegister() {
@@ -571,9 +484,9 @@ public String biologyCourse(HttpSession session, Model model) {
         }
     }
 
-    
-    
-    
+    // ==========================================
+    // FACULTY REGISTRATION (Admin only)
+    // ==========================================
     
     @GetMapping("/faculty-register")
     public String facultyRegister() {
@@ -610,9 +523,9 @@ public String biologyCourse(HttpSession session, Model model) {
         }
     }
 
-    
-    
-    
+    // ==========================================
+    // ADMIN REGISTRATION (Super Admin only)
+    // ==========================================
     
     @GetMapping("/admin-register")
     public String adminRegister() {

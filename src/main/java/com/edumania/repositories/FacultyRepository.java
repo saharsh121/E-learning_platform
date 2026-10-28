@@ -9,12 +9,12 @@ import java.util.List;
 @Repository
 public interface FacultyRepository extends MongoRepository<Faculty, String> {
     
-    
+    // Find faculty by email (for login)
     Optional<Faculty> findByEmail(String email);
     
-    
+    // Find faculty by department
     List<Faculty> findByDepartment(String department);
     
-    
+    // Find active faculty
     List<Faculty> findByIsActiveTrue();
 }

@@ -23,22 +23,19 @@
     </properties>
     
     <dependencies>
-        <dependency>
-            <groupId>com.cloudinary</groupId>
-            <artifactId>cloudinary-http5</artifactId>
-            <version>2.0.0</version>
-        </dependency>
-
+        <!-- Spring Boot Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         
+        <!-- Thymeleaf for HTML templates -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         
+        <!-- Optional: For hot reload during development -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -65,3 +62,5 @@
 </project>
 
 
+
+<!-- mvn spring-boot:run -->

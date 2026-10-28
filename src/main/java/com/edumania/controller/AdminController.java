@@ -8,13 +8,13 @@ import com.edumania.services.FacultyService;
 import com.edumania.services.StudentService;
 import com.edumania.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class AdminController {
@@ -31,9 +31,9 @@ public class AdminController {
     @Autowired
     private CourseService courseService;
 
-    
-    
-    
+    // ==========================================
+    // ADMIN DASHBOARD
+    // ==========================================
     
     @GetMapping("/admin-dashboard")
     public String adminDashboard(HttpSession session, Model model) {
@@ -43,7 +43,7 @@ public class AdminController {
             return "redirect:/admin-login";
         }
         
-        
+        // Get all data
         List<Student> students = studentService.getAllStudents();
         List<Faculty> faculty = facultyService.getAllFaculty();
         List<Admin> admins = adminService.getAllAdmins();
@@ -60,9 +60,9 @@ public class AdminController {
         return "admin-dashboard";
     }
 
-    
-    
-    
+    // ==========================================
+    // ADD STUDENT
+    // ==========================================
     
     @PostMapping("/admin/add-student")
     public String addStudent(
@@ -101,9 +101,9 @@ public class AdminController {
         return "redirect:/admin-dashboard";
     }
 
-    
-    
-    
+    // ==========================================
+    // ADD FACULTY
+    // ==========================================
     
     @PostMapping("/admin/add-faculty")
     public String addFaculty(
@@ -142,9 +142,9 @@ public class AdminController {
         return "redirect:/admin-dashboard";
     }
 
-    
-    
-    
+    // ==========================================
+    // SEARCH STUDENT
+    // ==========================================
     
     @GetMapping("/admin/search-student")
     public String searchStudent(
@@ -158,12 +158,12 @@ public class AdminController {
             return "redirect:/admin-login";
         }
         
-        
+        // Get all students
         List<Student> students = studentService.getAllStudents();
         List<Faculty> faculty = facultyService.getAllFaculty();
         List<Admin> admins = adminService.getAllAdmins();
         
-        
+        // Search for student
         Student foundStudent = null;
         String searchError = null;
         
@@ -194,9 +194,9 @@ public class AdminController {
         return "admin-dashboard";
     }
 
-    
-    
-    
+    // ==========================================
+    // SEARCH FACULTY
+    // ==========================================
     
     @GetMapping("/admin/search-faculty")
     public String searchFaculty(
@@ -210,12 +210,12 @@ public class AdminController {
             return "redirect:/admin-login";
         }
         
-        
+        // Get all data
         List<Student> students = studentService.getAllStudents();
         List<Faculty> faculty = facultyService.getAllFaculty();
         List<Admin> admins = adminService.getAllAdmins();
         
-        
+        // Search for faculty
         Faculty foundFaculty = null;
         String facultySearchError = null;
         
@@ -246,13 +246,13 @@ public class AdminController {
         return "admin-dashboard";
     }
 
-    
-    
-    
+    // ==========================================
+    // DELETE STUDENT
+    // ==========================================
     
     @PostMapping("/admin/delete-student")
     public String deleteStudent(
-            @RequestParam @NonNull String studentId,
+            @RequestParam String studentId,
             HttpSession session,
             RedirectAttributes redirectAttributes) {
         
@@ -272,13 +272,13 @@ public class AdminController {
         return "redirect:/admin-dashboard";
     }
 
-    
-    
-    
+    // ==========================================
+    // DELETE FACULTY
+    // ==========================================
     
     @PostMapping("/admin/delete-faculty")
     public String deleteFaculty(
-            @RequestParam @NonNull String facultyId,
+            @RequestParam String facultyId,
             HttpSession session,
             RedirectAttributes redirectAttributes) {
         

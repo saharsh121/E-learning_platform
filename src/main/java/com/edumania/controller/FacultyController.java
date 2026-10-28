@@ -3,19 +3,15 @@ package com.edumania.controller;
 import com.edumania.documents.Faculty;
 import com.edumania.documents.Video;
 import com.edumania.documents.Note;
+import com.edumania.services.FacultyService;
 import com.edumania.services.VideoService;
 import com.edumania.services.NoteService;
-import com.edumania.services.CloudinaryBookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.multipart.MultipartFile;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -23,7 +19,8 @@ import java.util.UUID;
 @Controller
 public class FacultyController {
 
-    private static final Logger logger = LoggerFactory.getLogger(FacultyController.class);
+    @Autowired
+    private FacultyService facultyService;
 
     @Autowired
     private VideoService videoService;
@@ -31,12 +28,9 @@ public class FacultyController {
     @Autowired
     private NoteService noteService;
 
-    @Autowired
-    private CloudinaryBookService cloudinaryBookService;
-
-    
-    
-    
+    // ==========================================
+    // FACULTY DASHBOARD
+    // ==========================================
     
     @GetMapping("/faculty-dashboard")
     public String facultyDashboard(HttpSession session, Model model) {
@@ -46,16 +40,9 @@ public class FacultyController {
             return "redirect:/faculty-login";
         }
         
-        
+        // Get all lectures and notes
         List<Video> lectures = videoService.getAllVideos();
         List<Note> notes = noteService.getAllNotes();
-        model.addAttribute("books", List.of());
-        try {
-            model.addAttribute("books", cloudinaryBookService.getBooks());
-        } catch (Exception e) {
-            logger.error("Unable to load books from Cloudinary", e);
-            model.addAttribute("booksError", "Books could not be loaded. Check the Cloudinary configuration and try again.");
-        }
         
         model.addAttribute("faculty", faculty);
         model.addAttribute("lectures", lectures);
@@ -64,55 +51,9 @@ public class FacultyController {
         return "faculty-dashboard";
     }
 
-    @PostMapping("/faculty/upload-book")
-    public String uploadBook(
-            @RequestParam String title,
-            @RequestParam(defaultValue = "") String description,
-            @RequestParam("file") MultipartFile file,
-            HttpSession session,
-            RedirectAttributes redirectAttributes) {
-        Faculty faculty = (Faculty) session.getAttribute("faculty");
-        if (faculty == null) {
-            return "redirect:/faculty-login";
-        }
-
-        String normalizedTitle = title.trim();
-        String normalizedDescription = description.trim();
-        if (normalizedTitle.isEmpty() || normalizedTitle.length() > 150) {
-            redirectAttributes.addFlashAttribute("error", "Book title is required and must be 150 characters or fewer.");
-            return "redirect:/faculty-dashboard";
-        }
-        if (normalizedDescription.length() > 1000) {
-            redirectAttributes.addFlashAttribute("error", "Book description must be 1000 characters or fewer.");
-            return "redirect:/faculty-dashboard";
-        }
-        String fileName = file.getOriginalFilename();
-        if (fileName == null || !fileName.toLowerCase().endsWith(".pdf")) {
-            redirectAttributes.addFlashAttribute("error", "Only PDF files are allowed.");
-            return "redirect:/faculty-dashboard";
-        }
-        if (file.getSize() > 10L * 1024 * 1024) {
-            redirectAttributes.addFlashAttribute("error", "Book PDF files must be 10 MB or smaller.");
-            return "redirect:/faculty-dashboard";
-        }
-
-        String facultyName = faculty.getFirstName() + " " + faculty.getLastName();
-        try {
-            cloudinaryBookService.uploadBook(file, normalizedTitle, normalizedDescription, facultyName);
-            redirectAttributes.addFlashAttribute("success", "Book uploaded successfully!");
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            redirectAttributes.addFlashAttribute("error", e.getMessage());
-        } catch (Exception e) {
-            logger.error("Unable to upload book to Cloudinary", e);
-            redirectAttributes.addFlashAttribute("error", "Book upload failed. Please check Cloudinary and try again.");
-        }
-
-        return "redirect:/faculty-dashboard";
-    }
-
-    
-    
-    
+    // ==========================================
+    // UPLOAD LECTURE
+    // ==========================================
     
     @PostMapping("/faculty/upload-lecture")
     public String uploadLecture(
@@ -131,7 +72,7 @@ public class FacultyController {
         }
         
         try {
-            
+            // Create new video/lecture
             Video video = new Video();
             video.setCourseId(courseId);
             video.setVideoId(courseId + "-VID-" + UUID.randomUUID().toString().substring(0, 6));
@@ -155,13 +96,13 @@ public class FacultyController {
         return "redirect:/faculty-dashboard";
     }
 
-    
-    
-    
+    // ==========================================
+    // DELETE LECTURE
+    // ==========================================
     
     @PostMapping("/faculty/delete-lecture")
     public String deleteLecture(
-            @RequestParam @NonNull String lectureId,
+            @RequestParam String lectureId,
             HttpSession session,
             RedirectAttributes redirectAttributes) {
         
@@ -181,9 +122,9 @@ public class FacultyController {
         return "redirect:/faculty-dashboard";
     }
 
-    
-    
-    
+    // ==========================================
+    // UPLOAD NOTE (PDF)
+    // ==========================================
     
     @PostMapping("/faculty/upload-note")
     public String uploadNote(
@@ -201,29 +142,29 @@ public class FacultyController {
         }
         
         try {
-            
+            // Check if file is empty
             if (file.isEmpty()) {
                 redirectAttributes.addFlashAttribute("error", "Please select a PDF file!");
                 return "redirect:/faculty-dashboard";
             }
             
-            
+            // Check if file is PDF
             String fileName = file.getOriginalFilename();
             if (fileName == null || !fileName.toLowerCase().endsWith(".pdf")) {
                 redirectAttributes.addFlashAttribute("error", "Only PDF files are allowed!");
                 return "redirect:/faculty-dashboard";
             }
             
-            
+            // Save file to static/uploads/notes/
             String filePath = "/uploads/notes/" + fileName;
             String fullPath = "src/main/resources/static" + filePath;
             
-            
+            // Create directories if not exist
             java.io.File targetFile = new java.io.File(fullPath);
             targetFile.getParentFile().mkdirs();
             file.transferTo(targetFile);
             
-            
+            // Create note in database
             Note note = new Note();
             note.setCourseId(courseId);
             note.setNoteId(courseId + "-NOTE-" + UUID.randomUUID().toString().substring(0, 6));
@@ -248,13 +189,13 @@ public class FacultyController {
         return "redirect:/faculty-dashboard";
     }
 
-    
-    
-    
+    // ==========================================
+    // DELETE NOTE
+    // ==========================================
     
     @PostMapping("/faculty/delete-note")
     public String deleteNote(
-            @RequestParam @NonNull String noteId,
+            @RequestParam String noteId,
             HttpSession session,
             RedirectAttributes redirectAttributes) {
         
@@ -265,10 +206,10 @@ public class FacultyController {
         }
         
         try {
-            
+            // Get note to get file path
             Note note = noteService.getNoteById(noteId).orElse(null);
             if (note != null) {
-                
+                // Delete file from system
                 String filePath = "src/main/resources/static" + note.getFileUrl();
                 java.io.File file = new java.io.File(filePath);
                 if (file.exists()) {

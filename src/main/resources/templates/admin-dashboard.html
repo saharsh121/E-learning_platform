@@ -6,19 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | EduMania</title>
 
-    
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/admin-dashboard.css">
 
 </head>
 
 <body>
 
-    
+    <!-- ========== SIDEBAR ========== -->
     <div class="sidebar">
         <div class="sidebar-brand">
             <i class="bi bi-mortarboard-fill"></i>
@@ -33,20 +33,31 @@
             </li>
             <li>
                 <i class="bi bi-person-plus"></i>
-                <a href="#add-student">Add Student and Faculty</a>
+                <a href="#add-student">Add Student</a>
+            </li>
+            <li>
+                <i class="bi bi-person-workspace"></i>
+                <a href="#add-faculty">Add Faculty</a>
             </li>
             <li>
                 <i class="bi bi-search"></i>
-                <a href="#search-student">Search StudentS and faculty</a>
+                <a href="#search-student">Search Student</a>
             </li>
             <li>
+                <i class="bi bi-search"></i>
+                <a href="#search-faculty">Search Faculty</a>
             </li>
             <li>
                 <i class="bi bi-people-fill"></i>
-                <a href="#all-students">All Students and Faculty</a>
+                <a href="#all-students">All Students</a>
+            </li>
+            <li>
+                <i class="bi bi-people"></i>
+                <a href="#all-faculty">All Faculty</a>
             </li>
             
         </ul>
+
         <div class="sidebar-footer">
             <div class="user-card">
                 <img th:src="'https://ui-avatars.com/api/?name=' + ${admin.firstName} + '+' + ${admin.lastName} + '&background=1A237E&color=fff&size=40'" alt="User">
@@ -61,10 +72,10 @@
         </div>
     </div>
 
-    
+    <!-- ========== MAIN CONTENT ========== -->
     <div class="main-content">
 
-        
+        <!-- Top Header -->
         <div class="top-header">
             <h4>Admin Dashboard</h4>
             <div class="header-right">
@@ -72,7 +83,7 @@
             </div>
         </div>
 
-        
+        <!-- Alert Messages -->
         <div th:if="${success}" class="alert alert-success alert-dismissible fade show">
             <i class="bi bi-check-circle-fill"></i> <span th:text="${success}"></span>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
@@ -82,7 +93,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
 
-        
+        <!-- Stats Row -->
         <div class="row g-4 mb-4">
             <div class="col-md-3 col-6">
                 <div class="stat-card">
@@ -122,9 +133,9 @@
             </div>
         </div>
 
-
-
-
+<!-- ========================================== -->
+<!-- ===== SECTION 1: ADD STUDENT ===== -->
+<!-- ========================================== -->
         
 <div class="section-card" id="add-student">
     <div class="card-header-custom">
@@ -176,9 +187,9 @@
     </div>
 </div>
 
-      
-
-
+      <!-- ========================================== -->
+<!-- ===== SECTION 2: ADD FACULTY ===== -->
+<!-- ========================================== -->
         
 <div class="section-card" id="add-faculty">
     <div class="card-header-custom">
@@ -231,9 +242,9 @@
         </form>
     </div>
 </div>
-        
-        
-        
+        <!-- ========================================== -->
+        <!-- ===== SECTION 3: SEARCH STUDENT ===== -->
+        <!-- ========================================== -->
         
         <div class="section-card" id="search-student">
             <div class="card-header-custom">
@@ -252,7 +263,7 @@
                     </div>
                 </form>
 
-                
+                <!-- Search Results -->
                 <div th:if="${searchedStudent != null}" class="mt-4">
                     <div class="result-card">
                         <div class="result-header">
@@ -280,9 +291,9 @@
             </div>
         </div>
 
-        
-        
-        
+        <!-- ========================================== -->
+        <!-- ===== SECTION 4: SEARCH FACULTY ===== -->
+        <!-- ========================================== -->
         
         <div class="section-card" id="search-faculty">
             <div class="card-header-custom">
@@ -301,7 +312,7 @@
                     </div>
                 </form>
 
-                
+                <!-- Search Results -->
                 <div th:if="${searchedFaculty != null}" class="mt-4">
                     <div class="result-card">
                         <div class="result-header">
@@ -329,9 +340,9 @@
             </div>
         </div>
 
-        
-        
-        
+        <!-- ========================================== -->
+        <!-- ===== SECTION 5: ALL STUDENTS ===== -->
+        <!-- ========================================== -->
         
         <div class="section-card" id="all-students">
             <div class="card-header-custom">
@@ -382,9 +393,9 @@
             </div>
         </div>
 
-        
-        
-        
+        <!-- ========================================== -->
+        <!-- ===== SECTION 6: ALL FACULTY ===== -->
+        <!-- ========================================== -->
         
         <div class="section-card" id="all-faculty">
             <div class="card-header-custom">
@@ -437,7 +448,7 @@
 
     </div>
 
-    
+    <!-- Footer -->
     <div class="footer">
         © 2026 EduMania - Admin Dashboard
     </div>

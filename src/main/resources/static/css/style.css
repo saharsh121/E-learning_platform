@@ -1,8 +1,8 @@
+/* =========================================================
+   EduMania - Professional Stylesheet
+   ========================================================= */
 
-
-
-
-
+/* ---------- Root Variables ---------- */
 :root {
     --primary: #2563eb;
     --primary-dark: #1d4ed8;
@@ -33,7 +33,7 @@
     --transition: all 0.3s ease;
 }
 
-
+/* ---------- Global ---------- */
 * {
     margin: 0;
     padding: 0;
@@ -60,7 +60,7 @@ section {
     scroll-margin-top: 80px;
 }
 
-
+/* ---------- Hero ---------- */
 .hero {
     min-height: 460px;
     display: flex;
@@ -123,7 +123,7 @@ section {
     line-height: 1.9;
 }
 
-
+/* ---------- Login Portals ---------- */
 .login-section {
     margin-top: -65px;
     position: relative;
@@ -217,7 +217,7 @@ section {
     background: linear-gradient(135deg, #dc2626, #b91c1c);
 }
 
-
+/* ---------- Section Titles ---------- */
 .section-title {
     margin-bottom: 38px;
 }
@@ -241,7 +241,7 @@ section {
     background: linear-gradient(90deg, var(--primary), var(--accent));
 }
 
-
+/* ---------- About ---------- */
 #about {
     padding-top: 75px !important;
     padding-bottom: 85px !important;
@@ -259,7 +259,7 @@ section {
     box-shadow: var(--shadow-sm);
 }
 
-
+/* ---------- Features ---------- */
 #features {
     padding-bottom: 90px !important;
 }
@@ -328,7 +328,7 @@ section {
     margin-bottom: 0;
 }
 
-
+/* ---------- Footer ---------- */
 footer {
     padding: 25px 0;
     color: #cbd5e1;
@@ -342,13 +342,13 @@ footer .container {
     line-height: 1.7;
 }
 
-
+/* ---------- Selection ---------- */
 ::selection {
     color: #ffffff;
     background: var(--primary);
 }
 
-
+/* ---------- Scrollbar ---------- */
 ::-webkit-scrollbar {
     width: 9px;
 }
@@ -366,7 +366,7 @@ footer .container {
     background: #64748b;
 }
 
-
+/* ---------- Responsive Design ---------- */
 @media (max-width: 991.98px) {
     .navbar-nav {
         margin-top: 12px;
@@ -452,7 +452,7 @@ footer .container {
     }
 }
 
-
+/* ---------- Accessibility ---------- */
 .nav-link:focus-visible,
 .btn:focus-visible,
 .navbar-toggler:focus-visible {
@@ -460,7 +460,7 @@ footer .container {
     outline-offset: 3px;
 }
 
-
+/* ---------- Reduced Motion ---------- */
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;

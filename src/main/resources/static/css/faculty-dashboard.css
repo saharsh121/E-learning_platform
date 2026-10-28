@@ -1,11 +1,11 @@
+/* ===============================
+   FACULTY DASHBOARD CSS
+   EduMania - Faculty Portal
+=================================*/
 
-
-
-
-
-
-
-
+/* ===============================
+   GLOBAL
+=================================*/
 
 * {
     margin: 0;
@@ -22,9 +22,9 @@ a {
     text-decoration: none;
 }
 
-
-
-
+/* ===============================
+   SIDEBAR
+=================================*/
 
 .sidebar {
     height: 100vh;
@@ -160,9 +160,9 @@ a {
     color: white;
 }
 
-
-
-
+/* ===============================
+   MAIN CONTENT
+=================================*/
 
 .main-content {
     margin-left: 260px;
@@ -170,9 +170,9 @@ a {
     min-height: 100vh;
 }
 
-
-
-
+/* ===============================
+   TOP HEADER
+=================================*/
 
 .top-header {
     background: white;
@@ -217,9 +217,9 @@ a {
     color: #333;
 }
 
-
-
-
+/* ===============================
+   SECTION CARDS
+=================================*/
 
 .section-card {
     background: white;
@@ -247,9 +247,9 @@ a {
     margin-right: 8px;
 }
 
-
-
-
+/* ===============================
+   ALERT MESSAGES
+=================================*/
 
 .alert {
     border-radius: 10px;
@@ -273,9 +273,9 @@ a {
     margin-right: 10px;
 }
 
-
-
-
+/* ===============================
+   UPLOAD FORM
+=================================*/
 
 .upload-form {
     background: #f8fafc;
@@ -350,9 +350,9 @@ a {
     margin-right: 8px;
 }
 
-
-
-
+/* ===============================
+   LECTURE/NOTE LIST
+=================================*/
 
 .lecture-list {
     margin-top: 20px;
@@ -424,9 +424,9 @@ a {
     margin-right: 5px;
 }
 
-
-
-
+/* ===============================
+   BADGES
+=================================*/
 
 .badge-physics {
     background: #2563eb;
@@ -452,9 +452,9 @@ a {
     font-size: 11px;
 }
 
-
-
-
+/* ===============================
+   BUTTONS
+=================================*/
 
 .btn-sm {
     padding: 4px 12px;
@@ -501,9 +501,9 @@ a {
     background: #c82333;
 }
 
-
-
-
+/* ===============================
+   EMPTY STATE
+=================================*/
 
 .empty-state {
     text-align: center;
@@ -521,9 +521,9 @@ a {
     font-size: 14px;
 }
 
-
-
-
+/* ===============================
+   FOOTER
+=================================*/
 
 .footer {
     background: #6D4C2A;
@@ -534,11 +534,11 @@ a {
     border-radius: 0 0 12px 12px;
 }
 
+/* ===============================
+   RESPONSIVE
+=================================*/
 
-
-
-
-
+/* Tablet */
 @media (max-width: 992px) {
     .sidebar {
         width: 70px;
@@ -576,7 +576,7 @@ a {
     }
 }
 
-
+/* Mobile */
 @media (max-width: 768px) {
     .main-content {
         margin-left: 0;
@@ -638,7 +638,7 @@ a {
     }
 }
 
-
+/* Small Mobile */
 @media (max-width: 576px) {
     .top-header {
         flex-direction: column;
