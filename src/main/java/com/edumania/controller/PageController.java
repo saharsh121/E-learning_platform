@@ -16,9 +16,9 @@ import com.edumania.services.AdminService;
 import com.edumania.services.CourseService;
 import com.edumania.services.VideoService;
 import com.edumania.services.NoteService;
+import com.edumania.services.NoteFileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,9 +28,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.servlet.http.HttpSession;
-import java.io.File;
-import java.nio.file.Path;
-import java.net.MalformedURLException;
 import java.io.IOException;
 
 @Controller
@@ -53,6 +50,9 @@ public class PageController {
 
     @Autowired
     private NoteService noteService;
+
+    @Autowired
+    private NoteFileStorageService noteFileStorageService;
 
     // ==========================================
     // HOME PAGE
@@ -402,35 +402,22 @@ public String biologyCourse(HttpSession session, Model model) {
             
             Note note = noteOptional.get();
             
-            noteService.incrementDownloads(noteId);
-            
-            String filePath = "src/main/resources/static" + note.getFileUrl();
-            File file = new File(filePath);
-            
-            if (!file.exists()) {
-                String fileName = note.getFileUrl().substring(note.getFileUrl().lastIndexOf("/") + 1);
-                filePath = "src/main/resources/static/uploads/notes/" + fileName;
-                file = new File(filePath);
-            }
-            
-            if (!file.exists()) {
-                System.out.println("❌ File not found: " + filePath);
+            Resource resource = noteFileStorageService.load(note.getFileUrl());
+            if (!resource.exists() || !resource.isReadable()) {
                 return ResponseEntity.notFound().build();
             }
-            
-            Path path = file.toPath();
-            Resource resource = new UrlResource(path.toUri());
+
+            noteService.incrementDownloads(noteId);
             
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_PDF)
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + note.getTitle() + ".pdf\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""
+                            + note.getTitle().replace("\"", "") + ".pdf\"")
                     .body(resource);
             
-        } catch (MalformedURLException e) {
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-} catch (IOException e) {
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-}
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 

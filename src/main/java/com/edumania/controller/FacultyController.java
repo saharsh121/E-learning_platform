@@ -6,6 +6,7 @@ import com.edumania.documents.Note;
 import com.edumania.services.FacultyService;
 import com.edumania.services.VideoService;
 import com.edumania.services.NoteService;
+import com.edumania.services.NoteFileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,9 @@ public class FacultyController {
 
     @Autowired
     private NoteService noteService;
+
+    @Autowired
+    private NoteFileStorageService noteFileStorageService;
 
     // ==========================================
     // FACULTY DASHBOARD
@@ -130,7 +134,7 @@ public class FacultyController {
     public String uploadNote(
             @RequestParam String courseId,
             @RequestParam String title,
-            @RequestParam String chapter,
+            @RequestParam(defaultValue = "") String chapter,
             @RequestParam("file") org.springframework.web.multipart.MultipartFile file,
             HttpSession session,
             RedirectAttributes redirectAttributes) {
@@ -141,28 +145,15 @@ public class FacultyController {
             return "redirect:/faculty-login";
         }
         
+        String storedFileUrl = null;
         try {
-            // Check if file is empty
-            if (file.isEmpty()) {
-                redirectAttributes.addFlashAttribute("error", "Please select a PDF file!");
-                return "redirect:/faculty-dashboard";
-            }
-            
-            // Check if file is PDF
             String fileName = file.getOriginalFilename();
             if (fileName == null || !fileName.toLowerCase().endsWith(".pdf")) {
                 redirectAttributes.addFlashAttribute("error", "Only PDF files are allowed!");
                 return "redirect:/faculty-dashboard";
             }
-            
-            // Save file to static/uploads/notes/
-            String filePath = "/uploads/notes/" + fileName;
-            String fullPath = "src/main/resources/static" + filePath;
-            
-            // Create directories if not exist
-            java.io.File targetFile = new java.io.File(fullPath);
-            targetFile.getParentFile().mkdirs();
-            file.transferTo(targetFile);
+
+            storedFileUrl = noteFileStorageService.store(file);
             
             // Create note in database
             Note note = new Note();
@@ -170,7 +161,7 @@ public class FacultyController {
             note.setNoteId(courseId + "-NOTE-" + UUID.randomUUID().toString().substring(0, 6));
             note.setTitle(title);
             note.setChapter(chapter);
-            note.setFileUrl(filePath);
+            note.setFileUrl(storedFileUrl);
             note.setFileType("PDF");
             note.setFileSize(file.getSize());
             note.setUploadedBy(faculty.getFirstName() + " " + faculty.getLastName());
@@ -183,7 +174,15 @@ public class FacultyController {
             redirectAttributes.addFlashAttribute("success", "Note uploaded successfully!");
             
         } catch (Exception e) {
+            if (storedFileUrl != null) {
+                try {
+                    noteFileStorageService.delete(storedFileUrl);
+                } catch (Exception cleanupException) {
+                    e.addSuppressed(cleanupException);
+                }
+            }
             redirectAttributes.addFlashAttribute("error", "Failed to upload note: " + e.getMessage());
+            return "redirect:/faculty-dashboard";
         }
         
         return "redirect:/faculty-dashboard";
@@ -206,18 +205,17 @@ public class FacultyController {
         }
         
         try {
-            // Get note to get file path
             Note note = noteService.getNoteById(noteId).orElse(null);
+            noteService.deleteNote(noteId);
             if (note != null) {
-                // Delete file from system
-                String filePath = "src/main/resources/static" + note.getFileUrl();
-                java.io.File file = new java.io.File(filePath);
-                if (file.exists()) {
-                    file.delete();
+                try {
+                    noteFileStorageService.delete(note.getFileUrl());
+                } catch (Exception e) {
+                    redirectAttributes.addFlashAttribute(
+                            "error", "Note was deleted, but its file could not be removed: " + e.getMessage());
+                    return "redirect:/faculty-dashboard";
                 }
             }
-            
-            noteService.deleteNote(noteId);
             redirectAttributes.addFlashAttribute("success", "Note deleted successfully!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Failed to delete note: " + e.getMessage());

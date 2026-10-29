@@ -53,6 +53,14 @@ MongoDB is used to manage application data such as:
 * Learning content
 * Other platform-related information
 
+## Uploaded PDF notes
+
+Faculty PDF notes are stored outside the packaged application resources in
+`uploads/notes` by default. Set `edumania.upload-dir` in
+`src/main/resources/application.properties` to choose another persistent
+directory. Uploaded files are served from `/uploads/notes/` and download
+metadata is stored in MongoDB.
+
 ## ⚙️ Installation & Setup
 ### 1. Clone the repository
 ### 2. Open the project
